@@ -1,0 +1,233 @@
+﻿@{
+    ViewBag.Title = "Thống kê";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var listBanAn = ViewData["listBanAn"] as List<LibData.BanAn> ;
+}
+@section Css{
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="~/Content/plugins/daterangepicker/daterangepicker.css">
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Thống kê</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Thống kê</a></li>
+                        <li class="breadcrumb-item active">Hóa đơn</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Main row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4 class="card-title">Bộ lọc & kết quả</h4>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="w-100">
+                                <div class="form-group">
+                                    <label>Khoảng thời gian:</label>
+                                    <button type="button" class="btn btn-info" style="position:absolute; right:20px; top: 53px;" data-toggle="collapse" data-target="#src"><i class="fa fa-filter" aria-hidden="true"></i> Bộ lọc nâng cao</button>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control float-right" id="reservationtime">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-default" onclick="getListHoaDon()">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 pb-1 collapse" id="src">
+                                        <div class="w-100 mb-2 card">
+                                            <div class="card-header search-card-header">
+                                                <div class="row text-center">
+                                                    <div class="col-md">
+                                                        <label class="control-label">Bộ lọc nâng cao</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row mb-3 align-items-center">
+                                                    <div class="col-md-1">
+                                                        <label class="control-label">Lọc theo</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control js-example-basic-single" id="type" style="width:100%">
+                                                            <option value="">-- Không --</option>
+                                                            <option value="GiamGia">Có giảm giá</option>
+                                                            <option value="Cash">Thanh toán tiền mặt</option>
+                                                            <option value="VnPay">Thanh toán vnpay</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <label class="control-label">Bàn ăn</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control js-example-basic-single" id="IdBan" style="width:100%">
+                                                            <option value="">-- Chọn Bàn --</option>
+                                                            @foreach (var item in listBanAn)
+                                                            {
+                                                                <option value="@item.TenBan">@item.TenBan</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    @*<div class="col-md text-right">
+                                                        <button type="button" class="btn btn-warning" onclick="DatLaiTimKiem()"><i class="fa fa-repeat" aria-hidden="true"></i> Đặt lại</button>
+                                                    </div>*@
+                                                </div>
+
+                                                <div class="row mb-3 align-items-center">
+                                                    <div class="col-md-1">
+                                                        <label class="control-label">Tìm kiếm</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control" id="searchKeyword" type="text" />
+                                                    </div>
+                                                    
+                                                    
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                            </div>
+                            <div class="w-100">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Kết quả tìm kiếm</h3>
+
+                                                @*<div class="card-tools">
+                                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                                            <div class="input-group-append">
+                                                                <button type="submit" class="btn btn-default">
+                                                                    <i class="fas fa-search"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body table-responsive p-0" style="height: 300px;">
+                                                <table class="table table-head-fixed text-nowrap table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>STT</th>
+                                                            <th>Mã hóa đơn</th>
+                                                            <th>Khách hàng</th>
+                                                            <th>Điện thoại</th>
+                                                            <th>Bàn</th>
+                                                            <th>Số người ăn</th>
+                                                            <th>Thời gian đến</th>
+                                                            <th>Thời gian đi</th>
+                                                            <th>Yêu cầu thêm</th>
+                                                            <th>Voucher</th>
+                                                            <th>Giảm giá</th>
+                                                            <th>Tổng tiền</th>
+                                                            <th>Hình thức thanh toán</th>
+                                                            <th>Tình trạng</th>
+                                                            <th>Ngày tạo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="listResult">
+                                                        <tr>
+                                                            <td colspan="16" class="text-center border-0"><i class="fa fa-bullhorn" aria-hidden="true"></i> Không có kết quả</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+@section Scripts{
+    <!-- date-range-picker -->
+    <script src="~/Content/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <script>
+        $(function () {
+
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'DD/MM/YYYY HH:mm'
+                }
+            })
+        })
+
+        function getListHoaDon() {
+            $("#listResult").load("/ThongKe/ListHoaDon", {
+                "datetimerange": $("#reservationtime").val(),
+                "idBan": $("#IdBan").val(),
+                "type": $("#type").val(),
+                "searchKeyword": $("#searchKeyword").val()
+            }, function (response, status, xhr) {
+
+            });
+        }
+    </script>
+   
+       @* <script>
+        var searchChanged = false;
+        var page = @ViewBag.page;
+        $("#sortBy").val(`@ViewBag.sortBy`);
+        $("#size").val(`@ViewBag.size`);
+        $("#searchTenBoMon").val(`@Html.Raw(ViewBag.searchTenBoMon)`);
+        $("#searchIdKhoa").val(`@ViewBag.searchIdKhoa`);
+
+        </script>
+
+        <script>
+        function sortAlpha(value) {
+            if (value === 0) {
+                $("#SortType").val(0);
+                $("#btnSortAlpha").attr("onclick", "sortAlpha(1)")
+                $("#btnSortAlpha").html('<i class="fa fa-sort-alpha-desc"></i>');
+                getListBoMon();
+
+            }
+            else {
+                $("#SortType").val(1);
+                $("#btnSortAlpha").attr("onclick", "sortAlpha(0)")
+                $("#btnSortAlpha").html('<i class="fa fa-sort-alpha-asc"></i>');
+                getListBoMon();
+            }
+        }
+        </script>*@
+
+}

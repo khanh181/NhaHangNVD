@@ -1,0 +1,11 @@
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\bin\Debug\LibData.dll.config
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\bin\Debug\LibData.dll
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\bin\Debug\LibData.pdb
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\bin\Debug\EntityFramework.dll
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\bin\Debug\EntityFramework.xml
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\obj\Debug\LibData.csproj.CoreCompileInputs.cache
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\obj\Debug\LibData.csproj.CopyComplete
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\obj\Debug\LibData.dll
+C:\Users\dyt\Desktop\NhaHangNVD\LibData\obj\Debug\LibData.pdb

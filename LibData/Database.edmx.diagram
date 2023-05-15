@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4805278030154ca28575524bc44d12b3" Name="Diagram1">
+        <EntityTypeShape EntityType="NhaHangNVDModel.Album" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.BanAn" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.CongThucMonAn" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.ChiNhanh" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.DatCho" Width="1.5" PointX="9.75" PointY="7.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.HoaDon" Width="1.5" PointX="3" PointY="1.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.KhachHang" Width="1.5" PointX="0.75" PointY="2.625" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.KhuyenMai" Width="1.5" PointX="11.75" PointY="4.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.MonAn" Width="1.5" PointX="3" PointY="11.125" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.NCC" Width="1.5" PointX="11.75" PointY="8.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.NDHoaDon" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.NhanVien" Width="1.5" PointX="7.75" PointY="1" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.NhanVienRole" Width="1.5" PointX="10" PointY="1.25" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.Role" Width="1.5" PointX="7.75" PointY="5.375" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.SuKien" Width="1.5" PointX="9.75" PointY="11.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.ThucDon" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.VatTu" Width="1.5" PointX="3" PointY="15.75" />
+        <EntityTypeShape EntityType="NhaHangNVDModel.VnPayResult" Width="1.5" PointX="5.25" PointY="6.625" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_HoaDon_BanAn" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_CongThucMonAn_MonAn" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_CongThucMonAn_VatTu" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_HoaDon_KhachHang" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_NDHoaDon_HoaDon" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_VnPayResult_HoaDon" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_MonAn_ThucDon" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_NDHoaDon_MonAn" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_NhanVienRole_NhanVien" />
+        <AssociationConnector Association="NhaHangNVDModel.FK_NhanVienRole_Role" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

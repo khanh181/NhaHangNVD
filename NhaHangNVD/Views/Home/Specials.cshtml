@@ -1,0 +1,135 @@
+﻿@model List<LibData.MonAn>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <section id="specials" class="specials">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Đặc biệt</h2>
+                <p>Một số món tiêu biểu của nhà</p>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-3">
+                    <ul class="nav nav-tabs flex-column">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(i == 0 ? "active show": "")" data-bs-toggle="tab" href="#tab-@i">@Model[i].TenMon</a>
+                            </li>
+                        }
+@*                        <li class="nav-item">
+                            <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1">Rắn hổ hành nấu cháo đậu xanh</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-2">Rắn dồi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-3">Rắn cuốn lá lốt nướng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-4">Rắn xào xả ớt</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-5">Rắn nướng muối ớt</a>
+                        </li>*@
+                    </ul>
+                </div>
+                <div class="col-lg-9 mt-4 mt-lg-0">
+                    <div class="tab-content">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <div class="tab-pane @(i == 0 ? "active show": "")" id="tab-@i">
+                                <div class="row">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>@Model[i].TenMon</h3>
+                                        @Html.Raw(Model[i].GioiThieu)
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="@Model[i].HinhAnh" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @*<div class="tab-pane active show" id="tab-1">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>Rắn hổ hành nấu cháo đậu xanh</h3>
+                                    <p class="fst-italic">
+                                        Món ăn đầu tiên trong danh sách là một món cháo,
+                                        quen thuộc nhưng được chế biến cùng thịt rắn hổ hành (có thể dùng các loại rắn khác
+                                        nhưng hổ hành được xem là ngon nhất để nấu với cháo).
+                                    </p>
+                                    <p>
+                                        Trong khi bát cháo gạo thơm ngon, cùng với những hạt đậu xanh vàng đều dậy mùi thơm hấp dẫn, thì thịt rắn ngọt thanh, thêm chút hành ngò nêm nếm. Tất cả tạo nên một hương vị đồng quê khó cưỡng. Món này rất thích
+                                        hợp cho những người đang có sức khỏe yếu, cần bổ sung dưỡng chất và phục hồi năng lượng.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                    <img src="~/Content/pages/login/assets/img/special/chaohodauxanh.jpg" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-2">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>Rắn dồi</h3>
+                                    <p class="fst-italic">Dồi rắn là một trong những món đặc trưng nhất của vùng Tháp Mười Bông Sen. Thịt rắn băm nhỏ, nêm thêm tiêu, bột ngọt, hành sả, rồi dồn vào phần da rắn đã lột trước đó.</p>
+                                    <p>
+                                        Dồn cho đến khi phần da căng tròn, sau đó buộc kín hai đầu là có thể đem đi chế biến. Với món ăn này,
+                                        bạn có thể chọn cách hấp, nướng hoặc chiên đều được, nhưng nhớ là phải ăn kèm với
+                                        các loại rau sống như tía tô, xà lách mới tròn vị.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                    <img src="~/Content/pages/login/assets/img/special/randoi.jpg" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-3">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>Rắn cuốn lá lốt nướng</h3>
+                                    <p class="fst-italic">Được nhiều người ưa chuộng bởi món này có thể được làm từ thịt của nhiều loại rắn khác nhau. Khi mua rắn về bạn chỉ cần làm sạch, lóc xương lấy thịt, bỏ đi phần da và ruột. Sau đó, băm nhỏ với ngò gai, sả nêm nếm chút gia vị cho dậy mùi thơm tương tự như bò lá lốt.</p>
+                                    <p>Kết hợp với những miếng lá lốt to xanh, rồi đem nướng hoặc chiên, bạn sẽ có ngay một món ăn thơm khói vô cùng hấp dẫn.</p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                    <img src="~/Content/pages/login/assets/img/special/ranlalot.jpg" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-4">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>Rắn xào xả ớt</h3>
+                                    <p class="fst-italic">Món này, thịt rắn khi được khử bỏ mùi tanh, rửa sạch thì cắt thành từng khúc nhỏ, ướp chung với các gia vị quen thuộc như hạt nêm, ớt sả băm nhuyễn, nước mắm, bột ngọt.</p>
+                                    <p>Sau đó bắc lên chảo xào cùng với hành và tỏi, phần thịt rắn sẽ săn lại, cho đến khi phần sả ngả sang vàng thì tắt bếp là được. Với mùi vị thơm nồng của sả ớt, món này rất thích hợp dùng kèm cơm.</p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                    <img src="~/Content/pages/login/assets/img/special/ranxaot.jpg" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-5">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>Rắn nướng muối ớt</h3>
+                                    <p class="fst-italic">Ướp thịt rắn với muối ớt rồi đem nướng. Trong khi nướng quét thêm muối ớt lên.</p>
+                                    <p>Khi chín, thịt rắn sẽ có sự hòa quyện giữa ngọt thanh của phần thịt, mặn mặn của muối và cay nồng của ớt. Cần cắt đầu rắn, tẩy mùi tanh bằng sả rồi nướng nguyên con.</p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                    <img src="~/Content/pages/login/assets/img/special/rannuongmuoiot.jpg" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+}

@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NhaHangNVDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="NhaHangNVDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BanAn" EntityType="NhaHangNVDModel.BanAn" />
+    <EntitySet Name="BangGia" EntityType="NhaHangNVDModel.BangGia" />
+    <EntitySet Name="ChiNhanh" EntityType="NhaHangNVDModel.ChiNhanh" />
+    <EntitySet Name="CongThucMonAn" EntityType="NhaHangNVDModel.CongThucMonAn" />
+    <EntitySet Name="DiaChiKhachHang" EntityType="NhaHangNVDModel.DiaChiKhachHang" />
+    <EntitySet Name="HoaDon" EntityType="NhaHangNVDModel.HoaDon" />
+    <EntitySet Name="KhachHang" EntityType="NhaHangNVDModel.KhachHang" />
+    <EntitySet Name="KhuyenMai" EntityType="NhaHangNVDModel.KhuyenMai" />
+    <EntitySet Name="MonAn" EntityType="NhaHangNVDModel.MonAn" />
+    <EntitySet Name="NCC" EntityType="NhaHangNVDModel.NCC" />
+    <EntitySet Name="NDBangGia" EntityType="NhaHangNVDModel.NDBangGia" />
+    <EntitySet Name="NDHoaDon" EntityType="NhaHangNVDModel.NDHoaDon" />
+    <EntitySet Name="NDPhieuNhap" EntityType="NhaHangNVDModel.NDPhieuNhap" />
+    <EntitySet Name="NhanVien" EntityType="NhaHangNVDModel.NhanVien" />
+    <EntitySet Name="NhanVienRole" EntityType="NhaHangNVDModel.NhanVienRole" />
+    <EntitySet Name="PhieuNhap" EntityType="NhaHangNVDModel.PhieuNhap" />
+    <EntitySet Name="Role" EntityType="NhaHangNVDModel.Role" />
+    <EntitySet Name="sysdiagrams" EntityType="NhaHangNVDModel.sysdiagrams" />
+    <EntitySet Name="ThucDon" EntityType="NhaHangNVDModel.ThucDon" />
+    <EntitySet Name="VatTu" EntityType="NhaHangNVDModel.VatTu" />
+    <AssociationSet Name="FK_HoaDon_BanAn" Association="NhaHangNVDModel.FK_HoaDon_BanAn">
+      <End Role="BanAn" EntitySet="BanAn" />
+      <End Role="HoaDon" EntitySet="HoaDon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HoaDon_BangGia" Association="NhaHangNVDModel.FK_HoaDon_BangGia">
+      <End Role="BangGia" EntitySet="BangGia" />
+      <End Role="HoaDon" EntitySet="HoaDon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NDBangGia_NDBangGia" Association="NhaHangNVDModel.FK_NDBangGia_NDBangGia">
+      <End Role="BangGia" EntitySet="BangGia" />
+      <End Role="NDBangGia" EntitySet="NDBangGia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CongThucMonAn_MonAn" Association="NhaHangNVDModel.FK_CongThucMonAn_MonAn">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="CongThucMonAn" EntitySet="CongThucMonAn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CongThucMonAn_VatTu" Association="NhaHangNVDModel.FK_CongThucMonAn_VatTu">
+      <End Role="VatTu" EntitySet="VatTu" />
+      <End Role="CongThucMonAn" EntitySet="CongThucMonAn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DiaChiKhachHang_KhachHang" Association="NhaHangNVDModel.FK_DiaChiKhachHang_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="DiaChiKhachHang" EntitySet="DiaChiKhachHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HoaDon_KhachHang" Association="NhaHangNVDModel.FK_HoaDon_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="HoaDon" EntitySet="HoaDon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NDHoaDon_HoaDon" Association="NhaHangNVDModel.FK_NDHoaDon_HoaDon">
+      <End Role="HoaDon" EntitySet="HoaDon" />
+      <End Role="NDHoaDon" EntitySet="NDHoaDon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MonAn_ThucDon" Association="NhaHangNVDModel.FK_MonAn_ThucDon">
+      <End Role="ThucDon" EntitySet="ThucDon" />
+      <End Role="MonAn" EntitySet="MonAn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NDBangGia_MonAn" Association="NhaHangNVDModel.FK_NDBangGia_MonAn">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="NDBangGia" EntitySet="NDBangGia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NDHoaDon_MonAn" Association="NhaHangNVDModel.FK_NDHoaDon_MonAn">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="NDHoaDon" EntitySet="NDHoaDon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NDPhieuNhap_NCC" Association="NhaHangNVDModel.FK_NDPhieuNhap_NCC">
+      <End Role="NCC" EntitySet="NCC" />
+      <End Role="NDPhieuNhap" EntitySet="NDPhieuNhap" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NDPhieuNhap_PhieuNhap" Association="NhaHangNVDModel.FK_NDPhieuNhap_PhieuNhap">
+      <End Role="PhieuNhap" EntitySet="PhieuNhap" />
+      <End Role="NDPhieuNhap" EntitySet="NDPhieuNhap" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NDPhieuNhap_VatTu" Association="NhaHangNVDModel.FK_NDPhieuNhap_VatTu">
+      <End Role="VatTu" EntitySet="VatTu" />
+      <End Role="NDPhieuNhap" EntitySet="NDPhieuNhap" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NhanVienRole_NhanVien" Association="NhaHangNVDModel.FK_NhanVienRole_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanVien" />
+      <End Role="NhanVienRole" EntitySet="NhanVienRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhieuNhap_NhanVien" Association="NhaHangNVDModel.FK_PhieuNhap_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanVien" />
+      <End Role="PhieuNhap" EntitySet="PhieuNhap" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NhanVienRole_Role" Association="NhaHangNVDModel.FK_NhanVienRole_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="NhanVienRole" EntitySet="NhanVienRole" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BanAn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenBan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TinhTrang" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="HoaDon" Relationship="NhaHangNVDModel.FK_HoaDon_BanAn" FromRole="BanAn" ToRole="HoaDon" />
+  </EntityType>
+  <EntityType Name="BangGia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ThoiGianBatDau" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ThoiGianKetThuc" Type="DateTime" Precision="3" />
+    <Property Name="TenBangGia" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SuDung" Type="Int32" Nullable="false" />
+    <Property Name="TinhTrang" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="HoaDon" Relationship="NhaHangNVDModel.FK_HoaDon_BangGia" FromRole="BangGia" ToRole="HoaDon" />
+    <NavigationProperty Name="NDBangGia" Relationship="NhaHangNVDModel.FK_NDBangGia_NDBangGia" FromRole="BangGia" ToRole="NDBangGia" />
+  </EntityType>
+  <EntityType Name="ChiNhanh">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ten" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CongThucMonAn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdMonAn" Type="Int32" Nullable="false" />
+    <Property Name="IdVatTu" Type="Int32" Nullable="false" />
+    <Property Name="SoLuong" Type="Double" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MonAn" Relationship="NhaHangNVDModel.FK_CongThucMonAn_MonAn" FromRole="CongThucMonAn" ToRole="MonAn" />
+    <NavigationProperty Name="VatTu" Relationship="NhaHangNVDModel.FK_CongThucMonAn_VatTu" FromRole="CongThucMonAn" ToRole="VatTu" />
+  </EntityType>
+  <EntityType Name="DiaChiKhachHang">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdKhachHang" Type="Int32" Nullable="false" />
+    <Property Name="TenDiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MacDinh" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="KhachHang" Relationship="NhaHangNVDModel.FK_DiaChiKhachHang_KhachHang" FromRole="DiaChiKhachHang" ToRole="KhachHang" />
+  </EntityType>
+  <EntityType Name="HoaDon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdKhachHang" Type="Int32" />
+    <Property Name="IdBanAn" Type="Int32" />
+    <Property Name="IdBangGia" Type="Int32" Nullable="false" />
+    <Property Name="TenKhachHang" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DienThoai" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="DiaChiShip" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CodeKM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TienKM" Type="Int32" Nullable="false" />
+    <Property Name="TongTien" Type="Int32" Nullable="false" />
+    <Property Name="HinhThucThanhToan" Type="Int32" Nullable="false" />
+    <Property Name="TinhTrang" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="BanAn" Relationship="NhaHangNVDModel.FK_HoaDon_BanAn" FromRole="HoaDon" ToRole="BanAn" />
+    <NavigationProperty Name="BangGia" Relationship="NhaHangNVDModel.FK_HoaDon_BangGia" FromRole="HoaDon" ToRole="BangGia" />
+    <NavigationProperty Name="KhachHang" Relationship="NhaHangNVDModel.FK_HoaDon_KhachHang" FromRole="HoaDon" ToRole="KhachHang" />
+    <NavigationProperty Name="NDHoaDon" Relationship="NhaHangNVDModel.FK_NDHoaDon_HoaDon" FromRole="HoaDon" ToRole="NDHoaDon" />
+  </EntityType>
+  <EntityType Name="KhachHang">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenKhach" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Salt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DienThoai" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DiaChiKhachHang" Relationship="NhaHangNVDModel.FK_DiaChiKhachHang_KhachHang" FromRole="KhachHang" ToRole="DiaChiKhachHang" />
+    <NavigationProperty Name="HoaDon" Relationship="NhaHangNVDModel.FK_HoaDon_KhachHang" FromRole="KhachHang" ToRole="HoaDon" />
+  </EntityType>
+  <EntityType Name="KhuyenMai">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NoiDung" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="KMPhanTram" Type="Int32" />
+    <Property Name="KMTienMat" Type="Int32" />
+    <Property Name="TinhTrang" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="MonAn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdThucDon" Type="Int32" Nullable="false" />
+    <Property Name="TenMon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="GioiThieu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="HinhAnh" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CongThucMonAn" Relationship="NhaHangNVDModel.FK_CongThucMonAn_MonAn" FromRole="MonAn" ToRole="CongThucMonAn" />
+    <NavigationProperty Name="ThucDon" Relationship="NhaHangNVDModel.FK_MonAn_ThucDon" FromRole="MonAn" ToRole="ThucDon" />
+    <NavigationProperty Name="NDBangGia" Relationship="NhaHangNVDModel.FK_NDBangGia_MonAn" FromRole="MonAn" ToRole="NDBangGia" />
+    <NavigationProperty Name="NDHoaDon" Relationship="NhaHangNVDModel.FK_NDHoaDon_MonAn" FromRole="MonAn" ToRole="NDHoaDon" />
+  </EntityType>
+  <EntityType Name="NCC">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenToChuc" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="NDPhieuNhap" Relationship="NhaHangNVDModel.FK_NDPhieuNhap_NCC" FromRole="NCC" ToRole="NDPhieuNhap" />
+  </EntityType>
+  <EntityType Name="NDBangGia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdBangGia" Type="Int32" Nullable="false" />
+    <Property Name="IdMonAn" Type="Int32" Nullable="false" />
+    <Property Name="DonGia" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="BangGia" Relationship="NhaHangNVDModel.FK_NDBangGia_NDBangGia" FromRole="NDBangGia" ToRole="BangGia" />
+    <NavigationProperty Name="MonAn" Relationship="NhaHangNVDModel.FK_NDBangGia_MonAn" FromRole="NDBangGia" ToRole="MonAn" />
+  </EntityType>
+  <EntityType Name="NDHoaDon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdHoaDon" Type="Int32" Nullable="false" />
+    <Property Name="IdMonAn" Type="Int32" Nullable="false" />
+    <Property Name="SoLuong" Type="Double" Nullable="false" />
+    <Property Name="ThanhTien" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="HoaDon" Relationship="NhaHangNVDModel.FK_NDHoaDon_HoaDon" FromRole="NDHoaDon" ToRole="HoaDon" />
+    <NavigationProperty Name="MonAn" Relationship="NhaHangNVDModel.FK_NDHoaDon_MonAn" FromRole="NDHoaDon" ToRole="MonAn" />
+  </EntityType>
+  <EntityType Name="NDPhieuNhap">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdPhieuNhap" Type="Int32" Nullable="false" />
+    <Property Name="IdVatTu" Type="Int32" Nullable="false" />
+    <Property Name="IdNCC" Type="Int32" Nullable="false" />
+    <Property Name="DonGia" Type="Int32" Nullable="false" />
+    <Property Name="DonVi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SoLuong" Type="Double" Nullable="false" />
+    <Property Name="ThanhTien" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="NCC" Relationship="NhaHangNVDModel.FK_NDPhieuNhap_NCC" FromRole="NDPhieuNhap" ToRole="NCC" />
+    <NavigationProperty Name="PhieuNhap" Relationship="NhaHangNVDModel.FK_NDPhieuNhap_PhieuNhap" FromRole="NDPhieuNhap" ToRole="PhieuNhap" />
+    <NavigationProperty Name="VatTu" Relationship="NhaHangNVDModel.FK_NDPhieuNhap_VatTu" FromRole="NDPhieuNhap" ToRole="VatTu" />
+  </EntityType>
+  <EntityType Name="NhanVien">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenNhanVien" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Salt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DienThoai" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+    <Property Name="QueQuan" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="NhanVienRole" Relationship="NhaHangNVDModel.FK_NhanVienRole_NhanVien" FromRole="NhanVien" ToRole="NhanVienRole" />
+    <NavigationProperty Name="PhieuNhap" Relationship="NhaHangNVDModel.FK_PhieuNhap_NhanVien" FromRole="NhanVien" ToRole="PhieuNhap" />
+  </EntityType>
+  <EntityType Name="NhanVienRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdRole" Type="Int32" Nullable="false" />
+    <Property Name="IdNhanVien" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="NhanVien" Relationship="NhaHangNVDModel.FK_NhanVienRole_NhanVien" FromRole="NhanVienRole" ToRole="NhanVien" />
+    <NavigationProperty Name="Role" Relationship="NhaHangNVDModel.FK_NhanVienRole_Role" FromRole="NhanVienRole" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="PhieuNhap">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdNhanVien" Type="Int32" Nullable="false" />
+    <Property Name="TieuDe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TongTien" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="NDPhieuNhap" Relationship="NhaHangNVDModel.FK_NDPhieuNhap_PhieuNhap" FromRole="PhieuNhap" ToRole="NDPhieuNhap" />
+    <NavigationProperty Name="NhanVien" Relationship="NhaHangNVDModel.FK_PhieuNhap_NhanVien" FromRole="PhieuNhap" ToRole="NhanVien" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rolename" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Rolecode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="NhanVienRole" Relationship="NhaHangNVDModel.FK_NhanVienRole_Role" FromRole="Role" ToRole="NhanVienRole" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="ThucDon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenThucDon" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="GioiThieu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MonAn" Relationship="NhaHangNVDModel.FK_MonAn_ThucDon" FromRole="ThucDon" ToRole="MonAn" />
+  </EntityType>
+  <EntityType Name="VatTu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenVT" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SoLuong" Type="Double" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgaySua" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CongThucMonAn" Relationship="NhaHangNVDModel.FK_CongThucMonAn_VatTu" FromRole="VatTu" ToRole="CongThucMonAn" />
+    <NavigationProperty Name="NDPhieuNhap" Relationship="NhaHangNVDModel.FK_NDPhieuNhap_VatTu" FromRole="VatTu" ToRole="NDPhieuNhap" />
+  </EntityType>
+  <Association Name="FK_HoaDon_BanAn">
+    <End Type="NhaHangNVDModel.BanAn" Role="BanAn" Multiplicity="0..1" />
+    <End Type="NhaHangNVDModel.HoaDon" Role="HoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BanAn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HoaDon">
+        <PropertyRef Name="IdBanAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HoaDon_BangGia">
+    <End Type="NhaHangNVDModel.BangGia" Role="BangGia" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.HoaDon" Role="HoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BangGia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HoaDon">
+        <PropertyRef Name="IdBangGia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NDBangGia_NDBangGia">
+    <End Type="NhaHangNVDModel.BangGia" Role="BangGia" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.NDBangGia" Role="NDBangGia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BangGia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NDBangGia">
+        <PropertyRef Name="IdBangGia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CongThucMonAn_MonAn">
+    <End Type="NhaHangNVDModel.MonAn" Role="MonAn" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.CongThucMonAn" Role="CongThucMonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonAn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CongThucMonAn">
+        <PropertyRef Name="IdMonAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CongThucMonAn_VatTu">
+    <End Type="NhaHangNVDModel.VatTu" Role="VatTu" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.CongThucMonAn" Role="CongThucMonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VatTu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CongThucMonAn">
+        <PropertyRef Name="IdVatTu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DiaChiKhachHang_KhachHang">
+    <End Type="NhaHangNVDModel.KhachHang" Role="KhachHang" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.DiaChiKhachHang" Role="DiaChiKhachHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DiaChiKhachHang">
+        <PropertyRef Name="IdKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HoaDon_KhachHang">
+    <End Type="NhaHangNVDModel.KhachHang" Role="KhachHang" Multiplicity="0..1" />
+    <End Type="NhaHangNVDModel.HoaDon" Role="HoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HoaDon">
+        <PropertyRef Name="IdKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NDHoaDon_HoaDon">
+    <End Type="NhaHangNVDModel.HoaDon" Role="HoaDon" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.NDHoaDon" Role="NDHoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HoaDon">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NDHoaDon">
+        <PropertyRef Name="IdHoaDon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MonAn_ThucDon">
+    <End Type="NhaHangNVDModel.ThucDon" Role="ThucDon" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.MonAn" Role="MonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ThucDon">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MonAn">
+        <PropertyRef Name="IdThucDon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NDBangGia_MonAn">
+    <End Type="NhaHangNVDModel.MonAn" Role="MonAn" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.NDBangGia" Role="NDBangGia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonAn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NDBangGia">
+        <PropertyRef Name="IdMonAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NDHoaDon_MonAn">
+    <End Type="NhaHangNVDModel.MonAn" Role="MonAn" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.NDHoaDon" Role="NDHoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonAn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NDHoaDon">
+        <PropertyRef Name="IdMonAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NDPhieuNhap_NCC">
+    <End Type="NhaHangNVDModel.NCC" Role="NCC" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.NDPhieuNhap" Role="NDPhieuNhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NCC">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NDPhieuNhap">
+        <PropertyRef Name="IdNCC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NDPhieuNhap_PhieuNhap">
+    <End Type="NhaHangNVDModel.PhieuNhap" Role="PhieuNhap" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.NDPhieuNhap" Role="NDPhieuNhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhieuNhap">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NDPhieuNhap">
+        <PropertyRef Name="IdPhieuNhap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NDPhieuNhap_VatTu">
+    <End Type="NhaHangNVDModel.VatTu" Role="VatTu" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.NDPhieuNhap" Role="NDPhieuNhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VatTu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NDPhieuNhap">
+        <PropertyRef Name="IdVatTu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NhanVienRole_NhanVien">
+    <End Type="NhaHangNVDModel.NhanVien" Role="NhanVien" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="NhaHangNVDModel.NhanVienRole" Role="NhanVienRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NhanVienRole">
+        <PropertyRef Name="IdNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhieuNhap_NhanVien">
+    <End Type="NhaHangNVDModel.NhanVien" Role="NhanVien" Multiplicity="1" />
+    <End Type="NhaHangNVDModel.PhieuNhap" Role="PhieuNhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PhieuNhap">
+        <PropertyRef Name="IdNhanVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NhanVienRole_Role">
+    <End Type="NhaHangNVDModel.Role" Role="Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="NhaHangNVDModel.NhanVienRole" Role="NhanVienRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NhanVienRole">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

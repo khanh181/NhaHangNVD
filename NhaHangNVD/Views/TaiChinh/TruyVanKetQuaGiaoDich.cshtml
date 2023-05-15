@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Truy vấn kết quả giao dịch -";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row m-0">
+                <div class="panel panel-primary filterable w-100">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <ol id="breadcumb" class="breadcrumb col">
+                                <li><a href="/">Trang chủ</a> / Truy vấn kết quả giao dịch</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <form action="javascript:sendRequestQuery()" id="formSendRequestQuery">
+                            <div class="form-group">
+                                <label>Mã giao dịch(*)</label>
+                                <input type="text" class="form-control" name="orderId" value="" required />
+                            </div>
+                            <!-- Date and time -->
+                            <div class="form-group">
+                                <label>Thời gian đến</label>
+                                <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                                    <input type="text" name="payDate" id="payDate" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm")" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
+                                    <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-info">Truy vấn</button>
+                        </form>
+                        <div id="display" style="padding-top: 20px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({ format: 'DD/MM/YYYY HH:mm', icons: { time: 'far fa-clock' } });;
+        });
+
+        function sendRequestQuery() {
+            var formData = new FormData(document.getElementById('formSendRequestQuery'));
+            $.ajax({
+                url: '/TaiChinh/TruyVanKetQuaGiaoDich',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        $("#display").html(`<b>VNPAY RESPONSE:</b> ` + data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+    </script>
+}

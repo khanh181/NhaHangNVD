@@ -1,0 +1,139 @@
+﻿@model List<LibData.Models.MenuViewData>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Count > 0)
+{
+    <section id="menu" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Menu</h2>
+                <p>Thực đơn hôm nay có gì ?</p>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="menu-flters">
+                        <li data-filter="*" class="filter-active">Tất cả</li>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <li data-filter=".filter-@i">@Model[i].ThucDon.TenThucDon</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    for (int j = 0; j < Model[i].MonAns.Count; j++)
+                    {
+                        <div class="col-lg-6 menu-item filter-@i">
+                            <img src="@Model[i].MonAns[j].HinhAnh" class="menu-img" alt="">
+                            <div class="menu-content">
+                                <a href="#">@Model[i].MonAns[j].TenMon</a><span>@String.Format("{0:0,0 VNĐ}", Model[i].MonAns[j].GiaTien)</span>
+                            </div>
+                            <div class="menu-ingredients">
+                                @Model[i].MonAns[j].GioiThieuNgan
+                            </div>
+                        </div>
+                    }
+                }
+
+                @*<div class="col-lg-6 menu-item filter-meals">
+                    <img src="~/Content/pages/login/assets/img/menu/nemran.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Nem rắn</a><span>150.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Rắn, mộc nhĩ, miến,..
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-drinks">
+                    <img src="~/Content/pages/login/assets/img/menu/ruouran.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Rượu rắn</a><span>40.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Rượu trắng tự ngâm, tim rắn
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-meals">
+                    <img src="~/Content/pages/login/assets/img/menu/ranhamthuocbac.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Rắn hầm thuốc bắc</a><span>200.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Rắn, thuốc bắc(táo tàu, hạt ý dĩ, đẳng sâm, kỉ tử, ..)
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-vegetables">
+                    <img src="~/Content/pages/login/assets/img/menu/bixaotoi.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Bí xào tỏi</a><span>40.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Bí, hành, tỏi,..
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-drinks">
+                    <img src="~/Content/pages/login/assets/img/menu/ruouranbinh.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Bình rượu vừa</a><span>300.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Bình 10l, rắn(tùy người mua), hương liệu, rượu nhà ngâm
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-meals">
+                    <img src="~/Content/pages/login/assets/img/menu/mozzarella.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Rắn xào</a><span>200.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Rắn, hương liệu, hành, mộc nhĩ
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-vegetables">
+                    <img src="~/Content/pages/login/assets/img/menu/raumuongxaotoi.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Rau muống xào tỏi</a><span>50.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Rau muống, tỏi, hương liệu
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-vegetables">
+                    <img src="~/Content/pages/login/assets/img/menu/bongbixaotoi.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Bông bí vào tỏi</a><span>40.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Bông bí, tỏi, gia vị
+                    </div>
+                </div>
+
+                <div class="col-lg-6 menu-item filter-drinks">
+                    <img src="~/Content/pages/login/assets/img/menu/ruouranbinh2.jpg" class="menu-img" alt="">
+                    <div class="menu-content">
+                        <a href="#">Chai rượu 1.5l</a><span>120.000VNĐ</span>
+                    </div>
+                    <div class="menu-ingredients">
+                        Rượu nhà ngâm, mật rắn, tim rắn
+                    </div>
+                </div>*@
+
+            </div>
+
+        </div>
+    </section>
+}    

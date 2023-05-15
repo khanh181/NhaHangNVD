@@ -1,0 +1,369 @@
+﻿
+@{
+    ViewBag.Title = "Thêm món ăn";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var listThucDon = ViewData["listThucDon"] as List<LibData.ThucDon>;
+    var listVatTu = ViewData["listVatTu"] as List<LibData.VatTu>;
+}
+
+
+<!-- summernote -->
+<link rel="stylesheet" href="~/Content/plugins/summernote/summernote-bs4.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Trang chủ</li>
+                        <li class="breadcrumb-item active">Thêm món ăn</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin món ăn</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="javascript:EditMonAn()" id="formUpdateMonAn">
+                            <div class="form-group">
+                                <label for="HoTen">Tên món ăn</label>
+                                <input type="text" id="TenMon" name="TenMon" class="form-control" required maxlength="200">
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Thuộc thực đơn</label>
+                                <select class="form-control select2bs4" style="width: 100%;" id="IdThucDon" name="IdThucDon" required>
+                                    @foreach (var item in listThucDon)
+                                    {
+                                        <option value="@item.Id">@item.TenThucDon</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Giới thiệu ngắn</label>
+                                <textarea id="GioiThieuNgan" name="GioiThieuNgan" class="form-control" maxlength="250"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Giá tiền</label>
+                                <input type="number" id="GiaTien" name="GiaTien" class="form-control" maxlength="50" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Món đặc biệt</label>
+                                <input type="checkbox" id="IsDacBiet" name="IsDacBiet" class="form-control" value="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Giới thiệu đặc biệt</label>
+                                <textarea id="GioiThieu" name="GioiThieu"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Hình ảnh</label>
+                                <div style="position: relative;margin-top:5px;margin-bottom:10px; width:195px;">
+                                    <img id="imgAvatar" src="/Content/dist/img/NoImage.jpg" style="border: 1px solid; width:200px;">
+                                    <div style="position: absolute; bottom: 0; right: 0; margin: 0 5px 2px 0">
+                                        <button id="themAnh" type="button"><i class="fas fa-file"></i></button>
+                                        <input id="Avatar" name="Avatar" type="file" onchange="readURL(this, '#imgAvatar')" style="display:none;" accept="image/*" required />
+                                    </div>
+                                    @*<input id="urlBanner" type="text" hidden/>*@
+                                </div>
+                            </div>
+                            <button type="submit" id="btnsmit" class="d-none"></button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Công thức món ăn</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md text-right">
+                                <button type="button" class="btn btn-info" onclick='onCreate()'><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm chi tiết</button>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-hover table-striped table-condensed" cellspacing="0" rules="all" border="1" id="tblCTMA">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Tên vật tư</th>
+                                    <th class="text-center">Số lượng tiêu thụ</th>
+                                    <th class="text-center">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <button class="btn btn-secondary" onclick="$('#formUpdateMonAn').trigger('reset');">Hủy</button>
+                <button type="button" onclick="$('#btnsmit').click()" class="btn btn-success float-right">Thêm  món ăn</button>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- modal thêm sửa chi tiết công thức món ăn -->
+<div id="CTMA-modal" class="modal effect-scale fade" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="CTMA-modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Thêm chi tiết</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:onSubmitCTMA()" id="formAddCTMA">
+                    <input type="hidden" id="CTMAId" name="Id" value="-1" />
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Vật tư <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <select class="form-control select2" id="IdVatTu" name="IdVatTu" style="width:100%" required>
+                                <option value="">- Chọn vật tư -</option>
+                                @foreach (var item in listVatTu)
+                                {
+                                    <option value="@item.Id">@item.TenVT</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Số lượng <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <input type="text" class="form-control currencyTextBox" name="SoLuong" id="SoLuong" value="" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="d-none" id="sMit" />
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary text-uppercase">đóng</button>
+                <button type="button" onclick="$('#sMit').click()" id="btnThemSuaCTMA" class="btn btn-success text-uppercase">thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Summernote -->
+    <script src="~/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        (function ($) {
+            $.fn.inputFilter = function (inputFilter) {
+                return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+                    if (inputFilter(this.value)) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if (this.hasOwnProperty("oldValue")) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                    } else {
+                        this.value = "";
+                    }
+                });
+            };
+        }(jQuery));
+        $(".currencyTextBox").inputFilter(function (value) {
+            return /^-?\d*[,]?\d{0,2}$/.test(value);
+        });
+        $('#GioiThieu').summernote()
+        //Initialize Select2 Elements
+        $('.select2').select2()
+        $('#themAnh').click(function (e) {
+            $('#Avatar').click();
+        });
+        var selectedRow = null
+        var ctmaCount = 0
+        let listCtma = {};
+        function readURL(input, id) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    //Initiate the JavaScript Image object.
+                    var image = new Image();
+                    //Set the Base64 string return from FileReader as source.
+                    image.src = e.target.result;
+                    //Validate the File Height and Width.
+                    image.onload = function () {
+                        var height = this.height;
+                        var width = this.width;
+                        @*if (id == "#Avatar") {
+                            if (height != width) {
+                                alert("Chỉ nhận ảnh icon kích thước dài=rộng(hình vuông)");
+                                $('#Avatar').val(null)
+                                return false;
+                            }
+                        }*@
+                        $(id).attr("src", e.target.result);
+                        return true;
+                    };
+
+                };
+                reader.readAsDataURL(input.files[0]);
+
+            }
+        }
+        function EditMonAn() {
+            if (listCtma) {
+                var formData = new FormData(document.getElementById('formUpdateMonAn'));
+                var i = 0;
+                for (key in listCtma) {
+                    formData.append('ctma[' + i + '].IdVatTu', listCtma[key].IdVatTu);
+                    formData.append('ctma[' + i + '].SoLuong', listCtma[key].SoLuong);
+                    i++
+                }
+                $.ajax({
+                    url: '/MonAn/ThemMonAn',
+                    dataType: 'json',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    type: 'POST',
+                    success: function (data) {
+                        //var data = JSON.parse(content)
+                        if (data.status == 200) {
+                            toastThanhCong(data.msg)
+                        }
+                        else {
+                            toastThatBai(data.msg)
+                        }
+
+                    }
+                });
+            }
+            else {
+                toastCanhbao("Món ăn phải có ít nhất 1 công thức.")
+            }
+
+        }
+
+        function resetForm() {
+            $("#IdVatTu").val("").change()
+            $("#SoLuong").val("")
+            $("#CTMAId").val("-1")
+            selectedRow = null;
+        }
+
+        function onCreate() {
+            $("#CTMA-modal-content div h6").text("Thêm chi tiết vào công thức");
+            $("#btnThemSuaCTMA").text("Thêm");
+            resetForm()
+            openModalCommom("CTMA-modal")
+        }
+
+        function onSubmitCTMA() {
+            var formData = readFormData();
+            if (selectedRow == null)
+                insertNewRecord(formData);
+            else
+                updateRecord(formData);
+        }
+
+        function readFormData() {
+            var formData = {};
+            formData["Id"] = $("#CTMAId").val()
+            formData["IdVatTu"] = $("#IdVatTu").val()
+            formData["SoLuong"] = $("#SoLuong").val()
+            formData["TenVatTu"] = $("#IdVatTu option:selected").text()
+            return formData;
+        }
+
+        function insertNewRecord(Data) {
+            var table = $("#tblCTMA tbody") //document.getElementById("tblTkb").getElementsByTagName('tbody')[0];
+            var newRow = `<tr>
+                            <td align="left">` + Data.TenVatTu + `</td>
+                            <td align="center">` + Data.SoLuong + `</td>
+                            <td style="display:none;">` + Data.IdVatTu + `</td>
+                            <td align="center">
+                                <button class="btn btn-warning" onclick="onEdit(this, `+ ctmaCount + `)"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</button>
+                                <button class="btn btn-danger" onclick="onDelete(this, `+ ctmaCount + `)"><i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</button>
+                            </td>
+                        </tr>`
+            table.append(newRow)
+            resetForm()
+            var detail = {
+                Id: ctmaCount,
+                IdVatTu: Data.IdVatTu,
+                SoLuong: Data.SoLuong
+            };
+            listCtma[ctmaCount] = detail;
+            ctmaCount++;
+            toastThanhCong("Thêm thành công.")
+            $("#CTMA-modal").modal("hide")
+        }
+
+
+        function onEdit(td, id) {
+            $("#CTMA-modal-content div h6").text("Sửa chi tiết vào công thức")
+            $("#btnThemSuaCTMA").text("Sửa")
+            selectedRow = td.parentElement.parentElement;
+            $("#SoLuong").val(selectedRow.cells[1].innerHTML)
+            $("#IdVatTu").val(selectedRow.cells[2].innerHTML).change()
+            $("#CTMAId").val(id)
+            openModalCommom("CTMA-modal")
+        }
+
+        function updateRecord(Data) {
+            selectedRow.cells[0].innerHTML = Data.TenVatTu;
+            selectedRow.cells[1].innerHTML = Data.SoLuong;
+            selectedRow.cells[2].innerHTML = Data.IdVatTu;
+
+            listCtma[Data.Id].SoLuong = Data.SoLuong;
+            listCtma[Data.Id].IdVatTu = Data.IdVatTu;
+
+            resetForm()
+            toastThanhCong("Cập nhật thành công.")
+            $("#CTMA-modal").modal("hide")
+            
+        }
+
+        function onDelete(td, id) {
+            if (confirm('Bạn có muốn xóa chi tiết này không ?')) {
+                row = td.parentElement.parentElement;
+                document.getElementById("tblCTMA").deleteRow(row.rowIndex);
+                delete listCtma[id];
+                resetForm();
+                toastThanhCong("Xóa thành công.")
+            }
+        }
+    </script>
+}

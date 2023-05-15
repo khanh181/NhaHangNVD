@@ -1,0 +1,37 @@
+﻿@model List<LibData.HoaDon>
+@{
+    Layout = null;
+}
+
+@if (Model.Count > 0)
+{
+    for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <td>@(i+1)</td>
+            <td>@Model[i].Id</td>
+            <td>@Model[i].KhachHang.TenKhach</td>
+            <td>@Model[i].KhachHang.DienThoai</td>
+            <td>Bàn số @Model[i].BanAn.TenBan</td>
+            <td>@Model[i].SoLuongNguoi</td>
+            <td>@Model[i].ThoiGianDen.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@(Model[i].ThoiGianDi.HasValue ? Model[i].ThoiGianDi.Value.ToString("dd/MM/yyyy HH:mm") : "")</td>
+            <td>@Model[i].YeuCauDacBiet</td>
+            <td>@Model[i].CodeKM</td>
+            <td>@string.Format("{0:0,0 VNĐ}", Model[i].TienKM)</td>
+            <td>@string.Format("{0:0,0 VNĐ}", Model[i].TongTien)</td>
+            <td>@(Model[i].HinhThucThanhToan.HasValue ? LibData.Config.CommonConfig.HinhThucThanhToanToDictionary[Model[i].HinhThucThanhToan.Value] : "")</td>
+            <td>@LibData.Config.CommonConfig.HoaDonStatusToDictionary[Model[i].TinhTrang]</td>
+            <td>@Model[i].NgayTao.ToString("dd/MM/yyyy HH:mm")</td>
+        </tr>
+    }
+    <tr>
+        <td colspan="15" class="text-center border-0"><i class="fa fa-bullhorn" aria-hidden="true"></i> Tổng danh thu: @string.Format("{0:0,0 VNĐ}", Model.Sum(x => x.TongTien))</td>
+    </tr>
+}
+else
+{
+    <tr>
+        <td colspan="15" class="text-center border-0"><i class="fa fa-bullhorn" aria-hidden="true"></i> Không có kết quả</td>
+    </tr>
+}

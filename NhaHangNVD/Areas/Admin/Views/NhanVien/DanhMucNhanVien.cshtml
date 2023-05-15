@@ -1,0 +1,179 @@
+﻿@model List<LibData.NhanVien>
+@using LibData.Config;
+@{
+    ViewBag.Title = "Danh mục nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var i = 0;
+}
+
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Nhân viên</h4>
+            <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Nhân viên
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header text-end">
+                    <!-- Button trigger modal -->
+                    @*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Thêm mới
+                        </button>*@
+                    @Html.ActionLink("Thêm mới", "ThemNhanVien", null, new { Class = "btn btn-primary", Target = "_black" })
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Basic Datatable</h5>
+
+                    <div class="table-responsive">
+                        <table id="NhanVienTable"
+                               class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Điện thoại</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Quê Quán</th>
+                                    <th>Tình trạng</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Ngày Sửa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@item.TenNhanVien</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.Password</td>
+                                            <td>@item.DienThoai</td>
+                                            <td>@item.NgaySinh</td>
+                                            <td>@item.QueQuan</td>
+                                            <td>@(item.TinhTrang == (int)CommonConfig.CommonStatus.Normal ? CommonConfig.CommonStatus.Normal.GetDescription() : CommonConfig.CommonStatus.Disabled.GetDescription())</td>
+                                            <td>@item.NgayTao.ToString("dd/MM/yyyy")</td>
+                                            <td>@(item.NgaySua.HasValue ? item.NgaySua.Value.ToString("dd/MM/yyyy"): "")</td>
+                                            <td>@Html.ActionLink("Sửa", "SuaNhanVien", new { id = item.Id }, new { Target = "_black" }) | <a href="javascript:xoaNhanVien(@item.Id)">Xóa</a></td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Css{
+    @*<link rel="stylesheet"
+        type="text/css"
+        href="~/Content/assets/extra-libs/multicheck/multicheck.css" />*@
+    <link href="~/Content/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+          rel="stylesheet" />
+    <link href="~/Content/assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"
+          rel="stylesheet" />
+}
+
+@section Scripts{
+    @*<script src="~/Content/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+        <script src="~/Content/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    *@
+    <script src="~/Content/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="~/Content/assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        /****************************************
+         *       Basic Table                   *
+         ****************************************/
+        var dataTable;
+        $(document).ready(function () {
+            dataTable = $("#NhanVienTable").DataTable()
+        });
+
+        function xoaNhanVien(id) {
+            if (confirm("Bạn chắc chắn chứ?"))
+            {
+                $.ajax({
+                    url: '/Admin/NhanVien/XoaNhanVien',
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    type: 'POST',
+                    success: function (data) {
+                        //var data = JSON.parse(content)
+                        if (data.status == 200) {
+                            toastr.success("Thông báo", "Thành công, vui lòng tải lại trang.");
+                        }
+                        else {
+                            toastr.error("Thông báo", data.msg);
+                        }
+
+                    }
+                });
+            }
+
+        }
+    </script>
+}

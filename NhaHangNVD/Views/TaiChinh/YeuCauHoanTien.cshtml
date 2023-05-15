@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Truy vấn kết quả giao dịch -";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row m-0">
+                <div class="panel panel-primary filterable w-100">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <ol id="breadcumb" class="breadcrumb col">
+                                <li><a href="/">Trang chủ</a> / Yêu cầu hoàn tiền</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <form action="javascript:sendRequestRefund()" id="formSendRequestRefund">
+                            <div class="form-group">
+                                <label>Mã giao dịch hoàn(*)</label>
+                                <input type="text" name="OrderId" class="form-control" value="" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Số tiền hoàn(*)</label>
+                                <input type="number" name="Amount" class="form-control" min="1" value="" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Kiểu hoàn tiền(*)</label>
+                                <select class="form-control js-example-basic-single" name="RefundCategory" style="width:100%">
+                                    <option value="02">Hoàn tiền toàn phần</option>
+                                    <option value="03">Hoàn tiền một phần</option>
+                                </select>
+                            </div>
+                            <!-- Date and time -->
+                            <div class="form-group">
+                                <label>Thời gian đến</label>
+                                <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                                    <input type="text" name="payDate" id="payDate" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm")" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
+                                    <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email khởi tạo hoàn(*)</label>
+                                <input type="email" name="Email" class="form-control" value="" required />
+                            </div>
+                            <button type="submit" class="btn btn-info">Gửi yêu cầu</button>
+                        </form>
+                        <div id="display" style="padding-top: 20px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            $(function () {
+                //Date and time picker
+                $('#reservationdatetime').datetimepicker({ format: 'DD/MM/YYYY HH:mm', icons: { time: 'far fa-clock' } });;
+            });
+        });
+
+        function sendRequestRefund() {
+            var formData = new FormData(document.getElementById('formSendRequestRefund'));
+            $.ajax({
+                url: '/TaiChinh/YeuCauHoanTien',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        $("#display").html(`<b>VNPAY RESPONSE:</b> ` + data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+    </script>
+}

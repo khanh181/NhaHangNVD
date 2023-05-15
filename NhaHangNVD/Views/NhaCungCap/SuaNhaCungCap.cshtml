@@ -1,0 +1,111 @@
+﻿@model LibData.NCC
+@{
+    ViewBag.Title = "Sửa nhà cung cấp";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+} 
+
+
+<!-- summernote -->
+<link rel="stylesheet" href="~/Content/plugins/summernote/summernote-bs4.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Trang chủ</li>
+                        <li class="breadcrumb-item active">Sửa nhà cung cấp</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin nhà cung cấp</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="javascript:EditNhaCungCap()" id="formEditNhaCungCap">
+                            @Html.HiddenFor(x => x.Id)
+                            <div class="form-group">
+                                <label for="HoTen">Tên nhà cung cấp</label>
+                                <input type="text" id="TenToChuc" name="TenToChuc" class="form-control" value="@Model.TenToChuc" maxlength="250" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="HoTen">Số điện thoại</label>
+                                <input type="tel" id="SDT" name="SDT" class="form-control" value="@Model.SDT" maxlength="20" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="HoTen">Địa chỉ</label>
+                                <input type="text" id="DiaChi" name="DiaChi" class="form-control" value="@Model.DiaChi" maxlength="500" required>
+                            </div>
+                            <button type="submit" id="btnsmit" class="d-none"></button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <button class="btn btn-secondary" onclick="$('#formEditNhaCungCap').trigger('reset');">Hủy</button>
+                <button type="button" onclick="$('#btnsmit').click()" class="btn btn-success float-right">Sửa nhà cung cấp</button>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Scripts{
+    <!-- Summernote -->
+    <script src="~/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        //Initialize Select2 Elements
+        $('.select2bs4-mul').select2({
+            theme: 'bootstrap4'
+        })
+        function EditNhaCungCap() {
+            var formData = new FormData(document.getElementById('formEditNhaCungCap'));
+            $.ajax({
+                url: '/NhaCungCap/SuaNhaCungCap',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+    </script>
+}

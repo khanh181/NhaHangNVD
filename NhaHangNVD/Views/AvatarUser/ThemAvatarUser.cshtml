@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Thêm ảnh";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    //var listThucDon = ViewData["listThucDon"] as List<LibData.ThucDon>;
+}
+
+
+<!-- summernote -->
+<link rel="stylesheet" href="~/Content/plugins/summernote/summernote-bs4.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Trang chủ</li>
+                        <li class="breadcrumb-item active">Thêm ảnh</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin ảnh</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="javascript:UpdateAvatarUser()" id="formUpdateAvatarUser">
+                            <div class="form-group">
+                                <label for="HoTen">Mã người dùng</label>
+                                <input type="text" id="MaNguoiDung" name="MaNguoiDung" class="form-control" required maxlength="50">
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Tên</label>
+                                <input type="text" id="Ten" name="Ten" class="form-control" required maxlength="250">
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Ghi chú</label>
+                                <textarea id="GhiChu" name="GhiChu" class="form-control" maxlength="1000"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Ảnh khách hàng</label>
+                                <input type="checkbox" id="IsDacBiet" name="IsDacBiet" class="form-control" value="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Hình ảnh</label>
+                                <div style="position: relative;margin-top:5px;margin-bottom:10px; width:195px;">
+                                    <img id="imgAvatar" src="/Content/dist/img/NoImage.jpg" style="border: 1px solid; width:200px;">
+                                    <div style="position: absolute; bottom: 0; right: 0; margin: 0 5px 2px 0">
+                                        <button id="themAnh" type="button"><i class="fas fa-file"></i></button>
+                                        <input id="Avatar" name="Avatar" type="file" onchange="readURL(this, '#imgAvatar')" style="display:none;" accept="image/*" required />
+                                    </div>
+                                    @*<input id="urlBanner" type="text" hidden/>*@
+                                </div>
+                            </div>
+                            <button type="submit" id="btnsmit" class="d-none"></button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <button class="btn btn-secondary" onclick="$('#formUpdateAvatarUser').trigger('reset');">Hủy</button>
+                <button type="button" onclick="$('#btnsmit').click()" class="btn btn-success float-right">Thêm  ảnh</button>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Scripts{
+    <!-- Summernote -->
+    <script src="~/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        $('#GioiThieu').summernote()
+        //Initialize Select2 Elements
+        $('.select2').select2()
+        $('#themAnh').click(function (e) {
+            $('#Avatar').click();
+        });
+        function readURL(input, id) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    //Initiate the JavaScript Image object.
+                    var image = new Image();
+                    //Set the Base64 string return from FileReader as source.
+                    image.src = e.target.result;
+                    //Validate the File Height and Width.
+                    image.onload = function () {
+                        var height = this.height;
+                        var width = this.width;
+                        @*if (id == "#Avatar") {
+                            if (height != width) {
+                                alert("Chỉ nhận ảnh icon kích thước dài=rộng(hình vuông)");
+                                $('#Avatar').val(null)
+                                return false;
+                            }
+                        }*@
+                        $(id).attr("src", e.target.result);
+                        return true;
+                    };
+
+                };
+                reader.readAsDataURL(input.files[0]);
+
+            }
+        }
+        function UpdateAvatarUser() {
+            var formData = new FormData(document.getElementById('formUpdateAvatarUser'));
+            $.ajax({
+                url: '/AvatarUser/ThemAvatarUser',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+    </script>
+}

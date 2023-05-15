@@ -1,0 +1,466 @@
+﻿@model D2018_QLVT.Data.PhatHang
+@{
+    ViewBag.Title = "Sửa đơn phát hàng";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var listKho = ViewData["listKho"] != null ? ViewData["listKho"] as List<D2018_QLVT.Data.Kho> : new List<D2018_QLVT.Data.Kho>();
+    var listPhanXuong = ViewData["listPhanXuong"] != null ? ViewData["listPhanXuong"] as List<D2018_QLVT.Data.PhanXuong> : new List<D2018_QLVT.Data.PhanXuong>();
+    var listNhanVien = ViewData["listNhanVien"] != null ? ViewData["listNhanVien"] as List<D2018_QLVT.Data.NhanVien> : new List<D2018_QLVT.Data.NhanVien>();
+    var listChiTietPhatHang = ViewData["listChiTietPhatHang"] != null ? ViewData["listChiTietPhatHang"] as List<D2018_QLVT.Data.ChiTietPhatHang> : new List<D2018_QLVT.Data.ChiTietPhatHang>();
+}
+
+<!-- summernote -->
+<link rel="stylesheet" href="~/Content/plugins/summernote/summernote-bs4.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Trang chủ</li>
+                        <li class="breadcrumb-item active">Sửa đơn phát hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin đơn phát hàng</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="javascript:editPhatHang()" id="formEditPhatHang">
+                            <input type="hidden" id="PhId" name="Id" value="@Model.Id" />
+                            <div class="form-group">
+                                <label for="HoTen">Số hiệu <span class="text-danger">*</span></label>
+                                <input type="text" id="SoHieu" name="SoHieu" class="form-control" value="@Model.SoHieu" disabled required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Phân xưởng nhận hàng <span class="text-danger">*</span></label>
+                                <select id="IdPhanXuong" name="IdPhanXuong" class="select2bs4 form-control" style="width: 100%;" required>
+                                    <option value="">-Lựa chọn phân xưởng-</option>
+                                    @foreach (var item in listPhanXuong)
+                                    {
+                                        <option value="@item.Id">@item.TenPhanXuong</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Nhân viên tạo đơn <span class="text-danger">*</span></label>
+                                <select id="IdNhanVienTao" name="IdNhanVienTao" class="select2bs4 form-control" style="width: 100%;" required>
+                                    <option value="">-Lựa chọn nhân viên-</option>
+                                    @foreach (var item in listNhanVien)
+                                    {
+                                        <option value="@item.Id">@item.HoTen</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Đơn vị tiền tệ <span class="text-danger">*</span></label>
+                                <input type="text" id="DonViTienTe" name="DonViTienTe" class="form-control" placeholder="VD: VNĐ" value="@Model.DonViTienTe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Phí vận chuyển <span class="text-danger">*</span></label>
+                                <input type="number" id="PhiVanChuyen" name="PhiVanChuyen" class="form-control" min="0" value="@Model.PhiVanChuyen" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Phí khác <span class="text-danger">*</span></label>
+                                <input type="number" id="PhiKhac" name="PhiKhac" class="form-control" min="0" value="@Model.PhiKhac" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Thuế GTGT(%) <span class="text-danger">*</span></label>
+                                <input type="number" id="TienThueGTGT" name="TienThueGTGT" class="form-control" min="0" max="100" value="@Model.TienThueGTGT" required>
+                            </div>
+                            <button type="submit" id="btnsmit" class="d-none"></button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Chi tiết đơn phát hàng</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md text-right">
+                                <button type="button" class="btn btn-info" onclick='onCreate()'><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm chi tiết</button>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-hover table-striped table-condensed" cellspacing="0" rules="all" border="1" id="tblCTPH">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Tên mặt hàng</th>
+                                    <th class="text-center">Tên Kho</th>
+                                    <th class="text-center">Đơn vị tính</th>
+                                    <th class="text-center">Đơn giá</th>
+                                    <th class="text-center">Số lượng</th>
+                                    <th class="text-center">Thành tiền</th>
+                                    <th class="text-center">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in listChiTietPhatHang)
+                                {
+                                    <tr>
+                                        <td align="left">@item.ChiTietKhoLuuTru.ChiTietPhieuGiaoHang.NhaCungCapMatHang.MatHang.TenHang</td>
+                                        <td align="left">@item.ChiTietKhoLuuTru.ChiTietPhieuGiaoHang.PhieuGiaoHang.Kho.TenKho</td>
+                                        <td align="center">@item.DonVi</td>
+                                        <td align="center">@item.DonGia</td>
+                                        <td align="center">@item.SoLuong</td>
+                                        <td align="center">@item.ThanhTien</td>
+                                        <td style="display:none;">@item.IdChiTietKhoLuuTru</td>
+                                        <td style="display:none;">@item.ChiTietKhoLuuTru.ChiTietPhieuGiaoHang.PhieuGiaoHang.IdKho</td>
+                                        <td align="center">
+                                            <button class="btn btn-warning" onclick="onEdit(this, @item.Id)"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</button>
+                                            <button class="btn btn-danger" onclick="onDelete(this, @item.Id)"><i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <button class="btn btn-secondary" onclick="$('#formEditPhatHang').trigger('reset');">Hủy</button>
+                <button type="button" onclick="$('#btnsmit').click()" class="btn btn-success float-right">Lưu</button>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- modal thêm sửa chi tiết phát hàng -->
+<div id="CTPH-modal" class="modal effect-scale fade" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="CTPH-modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Thêm phát hàng</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:onSubmitCTPH()" id="formAddCTPH">
+                    <input type="hidden" id="CTPHId" name="Id" value="-1" />
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Kho lấy hàng<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <select class="form-control select2bs4" id="IdKho" name="IdKho" style="width:100%" onchange="getChiTietKhoLuuTru()" required>
+                                <option value="">- Chọn Kho -</option>
+                                @foreach (var item in listKho)
+                                {
+                                    <option value="@item.Id">@item.TenKho</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Mặt hàng trong kho<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <select class="form-control select2bs4" id="IdChiTietKhoLuuTru" name="IdChiTietKhoLuuTru" style="width:100%" required>
+                                <option value="">- Chọn mặt hàng -</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Số lượng lấy<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <input type="number" class="form-control" name="SoLuong" id="SoLuong" min="1" value="" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="d-none" id="sMit" />
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary text-uppercase">đóng</button>
+                <button type="button" onclick="$('#sMit').click()" id="btnThemSuaCTPH" class="btn btn-success text-uppercase">thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-wrapper -->
+
+
+@section Scripts{
+    <!-- Summernote -->
+    <script src="~/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- InputMask -->
+    <script src="~/Content/plugins/moment/moment.min.js"></script>
+    <script src="~/Content/plugins/inputmask/jquery.inputmask.min.js"></script>
+
+    <script>
+        var selectedRow = null
+        $("#IdPhanXuong").val(@Model.IdPhanXuong)
+        $("#IdNhanVienTao").val(@Model.IdNhanVienTao)
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
+        function resetForm() {
+            $("#IdKho").val("").change()
+            $("#IdChiTietKhoLuuTru").val("").change()
+            $("#SoLuong").val("")
+            $("#CTPHId").val("-1")
+            selectedRow = null;
+        }
+
+        function onCreate() {
+            $("#CTPH-modal-content div h6").text("Thêm mặt hàng vào đơn phát hàng");
+            $("#btnThemSuaCTPH").text("Thêm");
+            resetForm()
+            openModalCommom("CTPH-modal")
+        }
+
+        function onSubmitCTPH() {
+            var formData = readFormData();
+            if (selectedRow == null)
+                insertNewRecord(formData);
+            else
+                updateRecord(formData);
+        }
+
+        function readFormData() {
+            var formData = {};
+            const myArray = $("#IdChiTietKhoLuuTru option:selected").text().split("|");
+            formData["Id"] = $("#CTPHId").val()
+            formData["TenKho"] = $("#IdKho option:selected").text()
+            formData["IdKho"] = $("#IdKho").val()
+            formData["IdChiTietKhoLuuTru"] = $("#IdChiTietKhoLuuTru").val()
+            formData["DonVi"] = myArray[1]
+            formData["DonGia"] = myArray[2]
+            formData["SoLuong"] = $("#SoLuong").val()
+            formData["TenMatHang"] = myArray[0]
+            formData["ThanhTien"] = $("#SoLuong").val() * myArray[2]
+            formData["SoLuongTrongKho"] = myArray[3]
+            return formData;
+        }
+
+        function insertNewRecord(data) {
+            if (data.SoLuong > data.SoLuongTrongKho) {
+                toastCanhbao("Số lượng mặt hàng trong kho không đủ.")
+                return
+            }
+            var table = $("#tblCTPH tbody") //document.getElementById("tblTkb").getElementsByTagName('tbody')[0];
+            var newRow = `<tr>
+                <td align="left">` + data.TenMatHang + `</td>
+                <td align="left">` + data.TenKho + `</td>
+                <td align="center">` + data.DonVi + `</td>
+                <td align="center">` + data.DonGia + `</td>
+                <td align="center">` + data.SoLuong + `</td>
+                <td align="center">` + data.ThanhTien + `</td>
+                <td style="display:none;">` + data.IdChiTietKhoLuuTru + `</td>
+                <td style="display:none;">` + data.IdKho + `</td>
+                <td align="center">
+                    <button class="btn btn-warning" onclick="onEdit(this, `+ data.Id + `)"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</button>
+                    <button class="btn btn-danger" onclick="onDelete(this, `+ data.Id + `)"><i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</button>
+                </td>
+            </tr>`
+            var formData = new FormData(document.getElementById('formAddCTPH'));
+            formData.append("DonVi", data.DonVi)
+            formData.append("DonGia", data.DonGia)
+            formData.append("SoLuong", data.SoLuong)
+            formData.append("IdPhatHang", $("#PhId").val())
+            formData.append("ThanhTien", data.ThanhTien)
+            $.ajax({
+                url: '/PhatHang/ThemChiTietPhatHang',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                        table.append(newRow)
+                        resetForm()
+                        $("#CTPH-modal").modal("hide")
+                        //window.location.reload()
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+
+
+        function onEdit(td, id) {
+            $("#CTPH-modal-content div h6").text("Sửa mặt hàng vào đơn phát hàng")
+            $("#btnThemSuaCTPH").text("Sửa")
+            selectedRow = td.parentElement.parentElement;
+
+
+            $("#IdKho").val(selectedRow.cells[7].innerHTML).change()
+            $("#SoLuong").val(selectedRow.cells[4].innerHTML)
+            $("#CTPHId").val(id)
+            $.ajax({
+                url: getChiTietKhoLuuTru(),
+                success: function () {
+                    $("#IdChiTietKhoLuuTru").val(selectedRow.cells[6].innerHTML).change()
+                    openModalCommom("CTPH-modal")
+                }
+            })
+           
+        }
+
+        function updateRecord(Data) {
+            var formData = new FormData(document.getElementById('formAddCTPH'));
+            formData.append("DonVi", Data.DonVi)
+            formData.append("DonGia", Data.DonGia)
+            formData.append("SoLuong", Data.SoLuong)
+            formData.append("IdPhatHang", $("#PhId").val())
+            formData.append("ThanhTien", Data.ThanhTien)
+            $.ajax({
+                url: '/PhatHang/SuaChiTietPhatHang',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        selectedRow.cells[0].innerHTML = Data.TenMatHang;
+                        selectedRow.cells[1].innerHTML = Data.TenKho;
+                        selectedRow.cells[2].innerHTML = Data.DonVi;
+                        selectedRow.cells[3].innerHTML = Data.DonGia;
+                        selectedRow.cells[4].innerHTML = Data.SoLuong;
+                        selectedRow.cells[5].innerHTML = Data.ThanhTien;
+                        selectedRow.cells[6].innerHTML = Data.IdChiTietKhoLuuTru;
+                        selectedRow.cells[7].innerHTML = Data.IdKho;
+                        toastThanhCong(data.msg)
+                        $("#CTPH-modal").modal("hide")
+                        resetForm()
+                        //window.location.reload()
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+
+        function onDelete(td, id) {
+            if (confirm('Bạn có muốn xóa mặt hàng này không ?')) {
+                $.ajax({
+                    url: '/PhatHang/DeleteCTPH',
+                    dataType: 'json',
+                    data: { id: id },
+                    type: 'POST',
+                    success: function (data) {
+                        //var data = JSON.parse(content)
+                        if (data.status == 200) {
+                            toastThanhCong(data.msg)
+                            row = td.parentElement.parentElement;
+                            document.getElementById("tblCTPH").deleteRow(row.rowIndex);
+                            //window.location.reload()
+                        }
+                        else {
+                            toastThatBai(data.msg)
+                        }
+
+                    }
+                });
+            }
+        }
+
+        function editPhatHang() {
+
+            var formData = new FormData(document.getElementById('formEditPhatHang'));
+
+            $.ajax({
+                url: '/PhatHang/SuaPhatHang',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+
+        function getChiTietKhoLuuTru() {
+            var idkho = $('#IdKho').val()
+            if (idkho) {
+                $.ajax({
+                    type: "GET",
+                    data: { idkho: idkho },
+                    url: "../PhatHang/GetChiTietKhoLuuTru",
+                    success: function (data, status, xhr) {
+                        if (data.status == 200) {
+                            var list = `<option value="">- Chọn mặt hàng -</option>`
+                            $.each(data.data, function (i, v) {
+                                var temp = `<option value="` + v.Id + `">` + v.TenHang + `|` + v.DonVi + `|` + v.DonGia + `|` + v.SoLuong + `</option>`
+                                list += temp;
+                            })
+                            $('#IdChiTietKhoLuuTru').html(list)
+                        }
+                        else if (data.status == 400) {
+                            toastCanhbao(data.msg)
+                        }
+                        else {
+                            toastThatBai(data.msg)
+                        }
+                    },
+                    error: function () {
+                        toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                    }
+                });
+            }
+            else {
+                $('#IdChiTietKhoLuuTru').html(`<option value="">- Chọn mặt hàng -</option>`)
+            }
+
+        }
+    </script>
+}

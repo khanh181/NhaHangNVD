@@ -1,0 +1,16 @@
+﻿@model List<LibData.BanAn>
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    var link = string.Format("https://via.placeholder.com/300/{0}?text={1}", LibData.Config.CommonConfig.BanStatusToDictionary[item.TinhTrang], item.TenBan);
+    <div class="filtr-item col-sm-2 " data-category="@item.TinhTrang" data-sort="white sample">
+        <a href="https://via.placeholder.com/1200/FFFFFF.png?text=1" data-toggle="lightbox"
+           data-title="sample 1 - white">
+            <img src="@link" class="img-fluid mb-2 border"
+                 alt="white sample" />
+        </a>
+    </div>
+}

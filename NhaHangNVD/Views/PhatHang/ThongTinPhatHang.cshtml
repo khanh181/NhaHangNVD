@@ -1,0 +1,78 @@
+﻿@model List<D2018_QLVT.Data.ChiTietPhatHang>
+@{
+    Layout = null;
+    var phathang = ViewData["phathang"] != null ? ViewData["phathang"] as D2018_QLVT.Data.PhatHang : new D2018_QLVT.Data.PhatHang();
+}
+
+<div class="modal-header">
+    <h6 class="modal-title">Thông tin đơn phát hàng</h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form action="javascript:0">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label">Số hiệu: @phathang.SoHieu</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Phân xưởng giao đến: @phathang.PhanXuong.TenPhanXuong</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Điạ chỉ phân xưởng: @phathang.PhanXuong.DiaChi</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Nhân viên tạo đơn: @phathang.NhanVien.HoTen</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Đơn vị tiền tệ: @phathang.DonViTienTe</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Phí vận chuyển: @phathang.PhiVanChuyen</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Phí khác: @phathang.PhiKhac</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Thuế GTGT(%): @phathang.TienThueGTGT</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Tổng tiền: @phathang.TongTien</label>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover table-striped table-condensed" cellspacing="0" rules="all" border="1">
+            <thead>
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Tên mặt hàng</th>
+                    <th class="text-center">Tên kho</th>
+                    <th class="text-center">Đơn vị tính</th>
+                    <th class="text-center">Đơn giá</th>
+                    <th class="text-center">Số lượng</th>
+                    <th class="text-center">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ((var item, int i) in Model.Select((item, i) => (item, i)))
+                {
+                    <tr>
+                        <td align="center">@(i+1)</td>
+                        <td align="left">@item.ChiTietKhoLuuTru.ChiTietPhieuGiaoHang.NhaCungCapMatHang.MatHang.TenHang</td>
+                        <td align="left">@item.ChiTietKhoLuuTru.ChiTietPhieuGiaoHang.PhieuGiaoHang.Kho.TenKho</td>
+                        <td align="center">@item.DonVi</td>
+                        <td align="center">@item.DonGia</td>
+                        <td align="center">@item.SoLuong</td>
+                        <td align="center">@item.ThanhTien</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-secondary text-uppercase">đóng</button>
+    <a class="btn btn-info text-uppercase" href="../PhatHang/ExportPhatHangToWord?IDPH=@phathang.Id">Xuất đơn phát hàng</a>
+</div>
+

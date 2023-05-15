@@ -1,0 +1,44 @@
+﻿@model List<LibData.Album>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <section id="chefs gallery  chars" class="chefs gallery  ">
+
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Chỗ ăn</h2>
+                <p>Một số hình ảnh bàn ăn của chúng tôi</p>
+            </div>
+        </div>
+
+        <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row g-0">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="gallery-item member " style="margin: 5px;border: none;">
+                            <a href="@item.HinhAnh" class="gallery-lightbox" data-gall="gallery-item">
+                                <img src="@item.HinhAnh" alt="" class="img-fluid" >
+                                <div class="member-info">
+                                    <div class="member-info-content">
+                                        <h4>@item.TenAnh</h4>
+                                        <span>@item.GhiChu</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+
+
+               
+
+            </div>
+
+        </div>
+    </section>
+}

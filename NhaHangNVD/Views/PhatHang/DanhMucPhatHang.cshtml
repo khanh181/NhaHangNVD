@@ -1,0 +1,203 @@
+﻿@model List<D2018_QLVT.Data.PhatHang>
+@{
+    ViewBag.Title = "Quản lý đơn phát hàng";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<!-- DataTables -->
+<link rel="stylesheet" href="~/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/Admin/Home/AdminHome">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Quản lý đơn phát hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Danh sách đơn phát hàng</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Số hiệu</th>
+                                        <th>Tên phân xưởng</th>
+                                        <th>Nhân viên tạo</th>
+                                        <th>Đơn vị tiền tệ</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Ngày cập nhật</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ((var item, int i) in Model.Select((item, i) => (item, i)))
+                                    {
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td><a href="javascript:0" onclick="ThongTinPhatHang(@item.Id)">@item.SoHieu</a></td>
+                                            <td>@item.PhanXuong.TenPhanXuong</td>
+                                            <td>@item.NhanVien.HoTen</td>
+                                            <td>@item.DonViTienTe</td>
+                                            <td>@item.TongTien</td>
+                                            <td>@(item.TrangThaiHoanThanh.HasValue ? "Đã hoàn thành" : "Chưa xác nhận")</td>
+                                            <td>@item.NgayTao.ToString("dd/MM/yyyy")</td>
+                                            <td>@(item.NgayCapNhat.HasValue ? item.NgayCapNhat.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                                                        Lựa chọn
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        @if (!item.TrangThaiHoanThanh.HasValue)
+                                                        {
+                                                            <li class="dropdown-item"><a href="#" onclick="showModalConfirm('ComfirmPhatHang(\'@item.Id\')','Xác nhận hoành thành','Sau khi xác nhận hoàn thành sẽ không thể chỉnh sửa, bạn vẫn muốn tiếp tục?')"> Xác nhận hoàn thành</a></li>
+                                                        }
+                                                        <li class="dropdown-item"><a target="_blank" href="/PhatHang/SuaPhatHang?id=@item.Id"> Sửa</a></li>
+                                                        <li class="dropdown-divider"></li>
+                                                        <li class="dropdown-item"><a href="#" onclick="showModalConfirm('DelOnePhatHang(\'@item.Id\')','Xóa đơn phát Hàng','Bạn có chắc chắn muốn xóa không?')"> Xóa</a></li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /input-group -->
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Số hiệu</th>
+                                        <th>Tên phân xưởng</th>
+                                        <th>Nhân viên tạo</th>
+                                        <th>Đơn vị tiền tệ</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Ngày cập nhật</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<div id="PH-modal" class="modal effect-scale fade" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="PH-modal-content">
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <!-- DataTables  & Plugins -->
+    <script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Content/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Content/plugins/jszip/jszip.min.js"></script>
+    <script src="~/Content/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/Content/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/Content/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Content/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Content/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <!-- Page specific script -->
+    <script>
+        $("#example1").DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json"
+            },
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+        function ThongTinPhatHang(id) {
+
+            $("#PH-modal-content").load("../PhatHang/ThongTinPhatHang?id=" + id, function (response, status, xhr) {
+                if (xhr.status != 200) {
+                    toastThatBai("Đã có lỗi xảy ra khi lấy dữ liệu!")
+                }
+                else {
+                    openModalCommom("PH-modal")
+                }
+            })
+        }
+
+        function ComfirmPhatHang(id) {
+            $.ajax({
+                type: "POST",
+                url: "../PhatHang/ComfirmPhatHang",
+                data: { id: id },
+                dataType: "json",
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+        function DelOnePhatHang(id) {
+            $.ajax({
+                type: "POST",
+                url: "../PhatHang/DeleteOnePhatHang",
+                data: { id: id },
+                dataType: "json",
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+    </script>
+}

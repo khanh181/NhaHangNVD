@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Thêm mặt hàng";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var listLoaiHang = ViewData["listLoaiHang"] != null ? ViewData["listLoaiHang"] as List<D2018_QLVT.Data.LoaiHang> : new List<D2018_QLVT.Data.LoaiHang>();
+}
+
+
+<!-- summernote -->
+<link rel="stylesheet" href="~/Content/plugins/summernote/summernote-bs4.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Trang chủ</li>
+                        <li class="breadcrumb-item active">Thêm mặt hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin mặt hàng</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="javascript:addMatHang()" id="formAddMatHang">
+                            <div class="form-group">
+                                <label for="HoTen">Loại hàng</label>
+                                <select id="IdLoaiHang" name="IdLoaiHang" class="select2bs4 form-control" style="width: 100%;" required>
+                                    <option value="">-Lựa chọn loại hàng-</option>
+                                    @foreach (var item in listLoaiHang)
+                                    {
+                                        <option value="@item.Id">@item.TenLoaiHang</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Tên hàng</label>
+                                <input type="text" id="TenHang" name="TenHang" class="form-control" maxlength="250" required>
+                            </div>
+                            <button type="submit" id="btnsmit" class="d-none"></button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <button class="btn btn-secondary" onclick="$('#formAddMatHang').trigger('reset');">Hủy</button>
+                <button type="button" onclick="$('#btnsmit').click()" class="btn btn-success float-right">Thêm mặt hàng</button>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section Scripts{
+    <!-- Summernote -->
+    <script src="~/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        function addMatHang() {
+            var formData = new FormData(document.getElementById('formAddMatHang'));
+            $.ajax({
+                url: '/MatHang/ThemMatHang',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+    </script>
+}

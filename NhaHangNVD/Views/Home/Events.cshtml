@@ -1,0 +1,42 @@
+﻿@model List<LibData.SuKien>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <section id="events" class="events">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Sự kiện</h2>
+                <p>Tổ chức các sự kiện hoặc bữa tiệc sinh nhật tại nhà hàng chúng tôi </p>
+            </div>
+
+            <div class="events-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    @foreach (var item in Model)
+                    {
+                        <div class="swiper-slide">
+                            <div class="row event-item">
+                                <div class="col-lg-6">
+                                    <img src="@item.HinhAnh" class="img-fluid" alt="">
+                                </div>
+                                <div class="col-lg-6 pt-4 pt-lg-0 content">
+                                    <h3>@item.TieuDe</h3>
+                                    <div class="price">
+                                        <p><span>@item.ChiPhi</span></p>
+                                    </div>
+                                    @Html.Raw(item.MoTa)
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+    </section>
+}

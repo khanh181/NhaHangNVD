@@ -1,0 +1,92 @@
+﻿@model List<D2018_QLVT.Data.ChiTietPhieuGiaoHang>
+@{
+    ViewBag.Title = "Thông tin phiếu giao hàng";
+    Layout = null;
+    var phieugiaohang = ViewData["phieugiaohang"] != null ? ViewData["phieugiaohang"] as D2018_QLVT.Data.PhieuGiaoHang : new D2018_QLVT.Data.PhieuGiaoHang();
+}
+
+<div class="modal-header">
+    <h6 class="modal-title">Thông tin phiếu giao hàng</h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form action="javascript:0">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label">Số hiệu: @phieugiaohang.SoHieu</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Kho giao đến: @phieugiaohang.Kho.TenKho</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Nhà cung cấp: @phieugiaohang.NhaCungCap.TenNCC</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Email nhà cung cấp: @phieugiaohang.NhaCungCap.Email</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">SĐT nhà cung cấp: @phieugiaohang.NhaCungCap.DienThoai</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Địa chỉ nhà cung cấp: @phieugiaohang.NhaCungCap.DiaChi</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Mã số thuế nhà cung cấp: @phieugiaohang.NhaCungCap.MaSoThue</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Số fax nhà cung cấp: @phieugiaohang.NhaCungCap.Fax</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Điều kiện giao hàng: @phieugiaohang.NhaCungCap.DieuKienGiaoHang.TenDieuKien</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Đơn vị tiền tệ: @phieugiaohang.DonViTienTe</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Phí vận chuyển: @phieugiaohang.PhiVanChuyen</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Phí khác: @phieugiaohang.PhiKhac</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Thuế GTGT(%): @phieugiaohang.TienThueGTGT</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Tổng tiền: @phieugiaohang.TongTien</label>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover table-striped table-condensed" cellspacing="0" rules="all" border="1">
+            <thead>
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Tên mặt hàng</th>
+                    <th class="text-center">Đơn vị tính</th>
+                    <th class="text-center">Đơn giá</th>
+                    <th class="text-center">Số lượng</th>
+                    <th class="text-center">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ((var item, int i) in Model.Select((item, i) => (item, i)))
+                {
+                    <tr>
+                        <td align="center">@(i+1)</td>
+                        <td align="left">@item.NhaCungCapMatHang.MatHang.TenHang</td>
+                        <td align="center">@item.DonVi</td>
+                        <td align="center">@item.DonGia</td>
+                        <td align="center">@item.SoLuong</td>
+                        <td align="center">@item.ThanhTien</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-secondary text-uppercase">đóng</button>
+    <a class="btn btn-info text-uppercase" href="../PhieuGiaoHang/ExportPhieuGiaoHangToWord?IDPGH=@phieugiaohang.Id">Xuất phiếu giao hàng</a>
+</div>
+

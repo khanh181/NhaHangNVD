@@ -1,0 +1,92 @@
+﻿@model List<LibData.Album>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count > 0)
+{
+<section id="gallery" class="gallery">
+
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Hình ảnh</h2>
+            <p>Một số bức ảnh về nhà hàng chúng tôi</p>
+        </div>
+    </div>
+
+    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-0">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4">
+                    <div class="gallery-item">
+                        <a href="@item.HinhAnh" class="gallery-lightbox" data-gall="gallery-item">
+                            <img src="@item.HinhAnh" alt="" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+            }
+
+
+            @*<div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <a href="~/Content/pages/login/assets/img/gallery/congnha1.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                    <img src="~/Content/pages/login/assets/img/gallery/congnha1.jpg" alt="" class="img-fluid">
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <a href="~/Content/pages/login/assets/img/gallery/cuanha.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                    <img src="~/Content/pages/login/assets/img/gallery/cuanha.jpg" alt="" class="img-fluid">
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <a href="~/Content/pages/login/assets/img/gallery/nhade.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                    <img src="~/Content/pages/login/assets/img/gallery/nhade.jpg" alt="" class="img-fluid">
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <a href="~/Content/pages/login/assets/img/gallery/nhade2.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                    <img src="~/Content/pages/login/assets/img/gallery/nhade2.jpg" alt="" class="img-fluid">
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <a href="~/Content/pages/login/assets/img/gallery/phongkhach1.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                    <img src="~/Content/pages/login/assets/img/gallery/phongkhach1.jpg" alt="" class="img-fluid">
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <a href="~/Content/pages/login/assets/img/gallery/phongkhach2.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                    <img src="~/Content/pages/login/assets/img/gallery/phongkhach2.jpg" alt="" class="img-fluid">
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <a href="~/Content/pages/login/assets/img/gallery/phongkhachnha1.jpg" class="gallery-lightbox" data-gall="gallery-item">
+                    <img src="~/Content/pages/login/assets/img/gallery/phongkhachnha1.jpg" alt="" class="img-fluid">
+                </a>
+            </div>
+        </div>*@
+
+        </div>
+
+    </div>
+</section>
+}

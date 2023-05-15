@@ -1,0 +1,129 @@
+﻿@model List<LibData.HoaDon>
+@{
+    Layout = null;
+    var listBan = ViewData["listBan"] as List<LibData.BanAn>;
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">Thông tin bàn @Model[0].BanAn.TenBan</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Thông tin đặt bàn</h3>
+        </div>
+        <div class="card-body">
+            <form action="javascript:editHoaDon('banduocdat')" id="formEditThongTinDatBan">
+                @Html.Hidden("Id", Model[0].Id)
+                <div class="form-group">
+                    <label>Tên khách: @Model[0].KhachHang.TenKhach</label>
+                    <br />
+                    <label>SĐT khách: @Model[0].KhachHang.DienThoai</label>
+                    <br />
+                    <label>Email khách: @Model[0].KhachHang.Email</label>
+                </div>
+                <div class="form-group">
+                    <label>Số người đến</label>
+                    <input type="number" class="form-control" name="SoLuongNguoi" value="@Model[0].SoLuongNguoi" />
+                </div>
+                <div class="form-group">
+                    <label>Yêu cầu đặc biệt</label>
+                    <textarea type="text" class="form-control" name="YeuCauDacBiet" maxlength="1000" rows="4">@Html.Raw(@Model[0].YeuCauDacBiet)</textarea>
+                </div>
+
+                <!-- Date and time -->
+                <div class="form-group">
+                    <label>Thời gian đến</label>
+                    <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                        <input type="text" name="ThoiGianDen" value="@Model[0].ThoiGianDen.ToString("dd/MM/yyyy HH:mm")" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
+                        <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" onclick="huyHoaDon('banduocdat')" class="btn btn-danger float-left">Hủy đặt chỗ</button>
+                <button type="submit" class="btn btn-warning float-right">Lưu Thay đổi</button>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Chuyển bàn</h3>
+        </div>
+        <div class="card-body">
+            <form action="javascript:chuyenBan('banduocdat')" id="formChuyenBan">
+                @Html.Hidden("id", Model[0].Id)
+                <div class="form-group">
+                    <label for="IdBanAn">Lựa chọn bàn chuyển</label>
+                    <select class="form-control select2bs4" name="idBanChuyenDen" id="idBanChuyenDen" required>
+                        <option value="" selected disabled>-- Lựa chọn bàn --</option>
+                        @foreach (var item in listBan)
+                        {
+                            <option value="@item.Id">Số bàn @item.TenBan</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary float-right">Chuyển</button>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách đặt chỗ đang chờ</h3>
+        </div>
+        <div class="card-body">
+
+            <div class="form-group">
+                <table class="table table-bordered table-striped mt-2" id="tableDsHDCho">
+                    <thead id="maincontent">
+                        <tr>
+                            <th>Thời gian đến</th>
+                            <th>Tên khách</th>
+                            <th>SĐT</th>
+                            <th>Số người đến</th>
+                            <th>Yêu cầu đặc biệt</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listHDCho">
+                        @if (Model.Count > 1)
+                        {
+                            for (int i = 1; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td>@Model[i].ThoiGianDen.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@Model[i].KhachHang.TenKhach</td>
+                                    <td>@Model[i].KhachHang.DienThoai</td>
+                                    <td>@Model[i].SoLuongNguoi</td>
+                                    <td>
+                                        @Html.Raw(Model[i].YeuCauDacBiet)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+<div class="modal-footer text-right">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+</div>
+
+<script>
+    $('.select2bs4').select2({
+        theme: 'bootstrap4'
+    })
+    //Date and time picker
+    $('#reservationdatetime').datetimepicker({ format: 'DD/MM/YYYY HH:mm', icons: { time: 'far fa-clock' } });;
+
+    
+</script>

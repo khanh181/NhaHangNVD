@@ -1,0 +1,221 @@
+﻿@model List<D2018_QLVT.Models.CustomDoiChieu>
+@{
+    ViewBag.Title = "Đối chiếu phiếu giao hàng";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    var phieugiaohang = ViewData["phieugiaohang"] != null ? ViewData["phieugiaohang"] as D2018_QLVT.Data.PhieuGiaoHang : new D2018_QLVT.Data.PhieuGiaoHang();
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Số hiệu</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Đối chiếu phiếu giao hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">SH00001</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-sm-4 mt-2">
+                                        <div class="position-relative p-3 bg-gray" style="height: 180px">
+                                            <div class="ribbon-wrapper ribbon-lg">
+                                                <div class="ribbon @item.strCss">
+                                                    @item.strStatus
+                                                </div>
+                                            </div>
+                                            @if (item.status == 3)
+                                            {
+                                                <text>Mặt hàng: @item.ctpgh.NhaCungCapMatHang.MatHang.TenHang</text> <br />
+                                                <small>Phiếu giao hàng</small> <text> | </text> <small>Đơn hàng</small><br />
+                                                <small>Đơn vị: @item.ctpgh.DonVi</small> <text> | </text> <small>Đơn vị: 0</small><br />
+                                                <small>Đơn giá: @item.ctpgh.DonGia</small> <text> | </text> <small>Đơn giá: 0</small><br />
+                                                <small>Số lượng: @item.ctpgh.SoLuong</small> <text> | </text> <small>Số lượng: 0</small><br />
+                                                <small>Thành tiền: @item.ctpgh.ThanhTien</small> <text> | </text> <small>Thành tiền: 0</small><br />
+                                            }
+                                            else if (item.status == 4)
+                                            {
+                                                <text>Mặt hàng: @item.ctdh.NhaCungCapMatHang.MatHang.TenHang</text> <br />
+                                                <small>Phiếu giao hàng</small> <text> | </text> <small>Đơn hàng</small><br />
+                                                <small>Đơn vị: 0</small> <text> | </text> <small>Đơn vị: @item.ctdh.DonVi</small><br />
+                                                <small>Đơn giá: 0</small> <text> | </text> <small>Đơn giá: @item.ctdh.DonGia</small><br />
+                                                <small>Số lượng: 0</small> <text> | </text> <small>Số lượng: @item.ctdh.SoLuong</small><br />
+                                                <small>Thành tiền: 0</small> <text> | </text> <small>Thành tiền: @item.ctdh.ThanhTien</small><br />
+                                            }
+                                            else
+                                            {
+                                                <text>Mặt hàng: @item.ctdh.NhaCungCapMatHang.MatHang.TenHang</text> <br />
+                                                <small>Phiếu giao hàng</small> <text> | </text> <small>Đơn hàng</small><br />
+                                                <small>Đơn vị: @item.ctpgh.DonVi</small> <text> | </text> <small>Đơn vị: @item.ctdh.DonVi</small><br />
+                                                <small>Đơn giá: @item.ctpgh.DonGia</small> <text> | </text> <small>Đơn giá: @item.ctdh.DonGia</small><br />
+                                                <small>Số lượng: @item.ctpgh.SoLuong</small> <text> | </text> <small>Số lượng: @item.ctdh.SoLuong</small><br />
+                                                <small>Thành tiền: @item.ctpgh.ThanhTien</small> <text> | </text> <small>Thành tiền: @item.ctdh.ThanhTien</small><br />
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-12 mb-3 text-right">
+                    @if (ViewBag.TypeSmitPTV != null)
+                    {
+                        if (ViewBag.TypeSmitPTV == 1)
+                        {
+                            <button type="button" class="btn btn-success" onclick="showModalConfirm('XacNhanThanhToan(\'@phieugiaohang.Id\')','Xác nhận','Bạn có chắc chắn muốn gửi cho phòng tài vụ thanh toán không?')">Xác nhận thanh toán</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-success" onclick="showModalConfirm('XacNhanHoanTra(\'@phieugiaohang.Id\')','Xác nhận','Bạn có chắc chắn muốn gửi cho phòng tài vụ trả hàng không?')">Xác nhận hoàn trả</button>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section Scripts{
+    <!-- Ion Slider -->
+    <script src="~/Content/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+    <!-- Bootstrap slider -->
+    <script src="~/Content/plugins/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <script>
+        $(function () {
+            /* BOOTSTRAP SLIDER */
+            $('.slider').bootstrapSlider()
+
+            /* ION SLIDER */
+            $('#range_1').ionRangeSlider({
+                min: 0,
+                max: 5000,
+                from: 1000,
+                to: 4000,
+                type: 'double',
+                step: 1,
+                prefix: '$',
+                prettify: false,
+                hasGrid: true
+            })
+            $('#range_2').ionRangeSlider()
+
+            $('#range_5').ionRangeSlider({
+                min: 0,
+                max: 10,
+                type: 'single',
+                step: 0.1,
+                postfix: ' mm',
+                prettify: false,
+                hasGrid: true
+            })
+            $('#range_6').ionRangeSlider({
+                min: -50,
+                max: 50,
+                from: 0,
+                type: 'single',
+                step: 1,
+                postfix: '°',
+                prettify: false,
+                hasGrid: true
+            })
+
+            $('#range_4').ionRangeSlider({
+                type: 'single',
+                step: 100,
+                postfix: ' light years',
+                from: 55000,
+                hideMinMax: true,
+                hideFromTo: false
+            })
+            $('#range_3').ionRangeSlider({
+                type: 'double',
+                postfix: ' miles',
+                step: 10000,
+                from: 25000000,
+                to: 35000000,
+                onChange: function (obj) {
+                    var t = ''
+                    for (var prop in obj) {
+                        t += prop + ': ' + obj[prop] + '\r\n'
+                    }
+                    $('#result').html(t)
+                },
+                onLoad: function (obj) {
+                    //
+                }
+            })
+        })
+
+        function XacNhanThanhToan(id) {
+            $.ajax({
+                type: "POST",
+                url: "../PhieuGiaoHang/XacNhanThanhToan",
+                data: { id: id },
+                dataType: "json",
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+        function XacNhanHoanTra(id) {
+            $.ajax({
+                type: "POST",
+                url: "../PhieuGiaoHang/XacNhanHoanTra",
+                data: { id: id },
+                dataType: "json",
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,260 @@
+﻿@model LibData.Models.HomeViewData
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row">
+                <div class="col-lg-6 order-1 order-lg-2" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="about-img">
+                        <img src="~/Content/pages/login/assets/img/gallery/cuanha.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+                    <h3>Rắn Lệ Mật Nguyễn Văn Dực </h3>
+                    <p class="fst-italic">
+                        Đặc sản rắn gia truyền từ bao đời nay
+                    </p>
+                    <p>
+                        Đây là địa chỉ nổi tiếng có truyền thống lâu đời nhất về món đặc sản thịt rắn và các món thịt thú rừng khác. Với hơn 20 năm kinh nghiệm, thương hiệu “Nguyễn Văn Dực” đã được khẳng định cũng như trở nên thân thuộc, gần gũi với nhiều thực khách trong và ngoài nước. Rắn là loài bò sát di chuyển nhanh, vận động nhiều, có hệ cơ săn chắc, khớp xương mềm mại, dẻo dai; dân gian từ lâu đã lưu truyền tác dụng của rắn trong chữa trị các bệnh về xương khớp, suy giảm sinh lý. Hầu hết tất cả các bộ phận của một con rắn từ mật rắn, huyết rắn, xương…cho đến da, mỡ và thịt đều có thể dùng để chế biến thành món và có tác dụng chữa bệnh riêng.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End About Section -->
+    <!-- ======= Why Us Section ======= -->
+    <section id="why-us" class="why-us">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2></h2>
+                <p>Vì sao nên chọn nhà hàng chúng tôi </p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                        <span>Lịch sử</span>
+                        <h4></h4>
+                        <p>
+                            Nhà hàng có lịch sử hơn 20 năm hành nghề,
+                            sẽ tạo cho quý khách cảm giác như về với Hà Nội
+                            xưa với những dấu ấn của năm tháng cũng như những đặc
+                            trưng nhất của làng cổ Lệ Mật
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="box" data-aos="zoom-in" data-aos-delay="200">
+                        <span>Hương vị</span>
+                        <h4></h4>
+                        <p>
+                            Đúc kết suốt chiều dài của lịch sử, mang trong mình
+                            tinh hoa nhất của làng Lệ Mật theo năm tháng mà
+                            thực khác có thể nếm qua theo từng món ăn chúng tôi phục vụ
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="box" data-aos="zoom-in" data-aos-delay="300">
+                        <span>Phục vụ</span>
+                        <h4></h4>
+                        <p>
+                            Mang trong mình nét truyền thống, quý khách sẽ được thưởng thức,
+                            trải nghiệm những bữa ăn của làng đã tồn tại bao đời nay dành cho
+                            quý khách từ phương xa đến thăm thú
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Why Us Section -->
+    <!-- ======= Menu Section ======= -->
+    @Html.Partial("Menu", Model.Menus)
+    <!-- End Menu Section -->
+    <!-- ======= Specials Section ======= -->
+    @Html.Partial("Specials", Model.MonAnDacBiets)
+    <!-- End Specials Section -->
+    <!-- ======= Events Section ======= -->
+    @Html.Partial("Events", Model.SuKiens)
+    <!-- End Events Section -->
+    <!-- ======= Gallery Section ======= -->
+    @Html.Partial("Albums", Model.Albums)
+    <!-- ======= Gallery Section ======= -->
+    @Html.Partial("Chars", Model.Chars)
+    <!-- ======= Book A Table Section ======= -->
+    <section id="book-a-table" class="book-a-table">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Đặt bàn</h2>
+                <p>Nếu có thêm yêu cầu gì hãy nhắn thêm cho chúng tôi</p>
+            </div>
+
+            <form action="javascript:sendDatCho()" class="php-email-form" id="formDatCho">
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 form-group">
+                        <input type="text" name="HoTen" class="form-control" id="name" placeholder="Vui lòng nhập tên bạn*" autocomplete="off" required>
+                        <div class="validate"></div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
+                        <input type="email" class="form-control" name="Email" id="email" placeholder="Vui lòng nhập email của bạn">
+                        <div class="validate"></div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
+                        <input type="text" class="form-control" name="SDT" id="phone" placeholder="Nhập số điện thoại của bạn*" required>
+                        <div class="validate"></div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="datetime-local" name="NgayDen" class="form-control" id="date" placeholder="Vui lòng điền ngày đến*" required>
+                        <div class="validate"></div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="number" class="form-control" name="SoNguoi" id="people" placeholder="Vui lòng nhập số người*" required>
+                        <div class="validate"></div>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <textarea class="form-control" name="YeuCau" rows="5" placeholder="Yêu cầu thêm" maxlength="1000"></textarea>
+                    <div class="validate"></div>
+                </div>
+                <div class="mb-3">
+                    <div class="loading">Loading</div>
+                    <div class="error-message">Làm ơn hãy nhập đủ thông tin</div>
+                    <div class="sent-message">Tin đặt bàn đã gửi, chúng tôi sẽ trả lời nhanh nhất có thể</div>
+                </div>
+                <div class="text-center"><button type="submit">Gửi</button></div>
+            </form>
+
+        </div>
+    </section>
+    <!-- End Book A Table Section -->
+    <!-- ======= Testimonials Section ======= -->
+    @Html.Partial("Avas", Model.Avas)
+    <!-- End Testimonials Section -->
+    <!-- End Gallery Section -->
+    <!-- ======= Chefs Section ======= -->
+    @Html.Partial("Chefs", Model.DauBeps)
+    <!-- End Chefs Section -->
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Liên lạc</h2>
+                <p>Địa chỉ chúng tôi</p>
+            </div>
+        </div>
+
+        <div data-aos="fade-up">
+            <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.450873117411!2d105.90154271488382!3d21.054646985984313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135a9a3dfe87d9d%3A0xa3d88c1b4563c9a6!2zTmjDoCBow6BuZyBuZ3V54buFbiB2xINuIGThu7FjIDI!5e0!3m2!1svi!2s!4v1664773390413!5m2!1svi!2s" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="container" data-aos="fade-up">
+
+            <div class="row mt-5">
+
+                <div class="col-lg-4">
+                    <div class="info">
+                        <div class="address">
+                            <i class="bi bi-geo-alt"></i>
+                            <h4>Địa điểm</h4>
+                            <p>16 Việt Hưng, Long Biên, Hà Nội</p>
+                        </div>
+
+                        <div class="open-hours">
+                            <i class="bi bi-clock"></i>
+                            <h4>Giờ mở cửa</h4>
+                            <p>
+                                Thứ 2-7 <br>
+                                9h - 23h
+                            </p>
+                        </div>
+
+                        <!-- <div class="email">
+                          <i class="bi bi-envelope"></i>
+                          <h4>Email:</h4>
+                          <p>info@example.com</p>
+                        </div> -->
+
+                        <div class="phone">
+                            <i class="bi bi-phone"></i>
+                            <h4>Số liên hệ</h4>
+                            <p>0964302628</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-8 mt-5 mt-lg-0">
+
+                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <div class="section-title">
+                            <p>Nếu quý khách có góp ý gì!</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Tên của bạn" required>
+                            </div>
+                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email của bạn" required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Tiêu đề góp ý" required>
+                        </div>
+                        <div class="form-group mt-3">
+                            <textarea class="form-control" name="message" rows="8" placeholder="Góp ý" required></textarea>
+                        </div>
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Góp ý của bạn đã gửi, xin cảm ơn</div>
+                        </div>
+                        <div class="text-center"><button type="submit">Gửi góp ý</button></div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main>
+@section Scripts{
+    <script>
+        function sendDatCho() {
+            var formData = new FormData(document.getElementById('formDatCho'));
+            $.ajax({
+                url: '/DatCho/ThemDatCho',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    alert(data.msg)
+
+                }
+            });
+        }
+        
+    </script>
+}

@@ -1,0 +1,462 @@
+﻿@model LibData.DonHang
+@{
+    ViewBag.Title = "Sửa đơn hàng";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    //var listNhaCungCap = ViewData["listNhaCungCap"] != null ? ViewData["listNhaCungCap"] as List<D2018_QLVT.Data.NhaCungCap> : new List<D2018_QLVT.Data.NhaCungCap>();
+    //var listNhanVien = ViewData["listNhanVien"] != null ? ViewData["listNhanVien"] as List<D2018_QLVT.Data.NhanVien> : new List<D2018_QLVT.Data.NhanVien>();
+    //var listChiTietDonHang = ViewData["listChiTietDonHang"] != null ? ViewData["listChiTietDonHang"] as List<D2018_QLVT.Data.ChiTietDonHang> : new List<D2018_QLVT.Data.ChiTietDonHang>();
+    //var listNhaCungCapMatHang = ViewData["listNhaCungCapMatHang"] != null ? ViewData["listNhaCungCapMatHang"] as List<D2018_QLVT.Data.NhaCungCapMatHang> : new List<D2018_QLVT.Data.NhaCungCapMatHang>();
+}
+
+
+<!-- summernote -->
+<link rel="stylesheet" href="~/Content/plugins/summernote/summernote-bs4.min.css">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">Trang chủ</li>
+                        <li class="breadcrumb-item active">Sửa đơn hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin đơn hàng</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="javascript:EditDonHang()" id="formEditDonHang">
+                            <input type="hidden" id="DhId" name="Id" value="@Model.Id" />
+                            <div class="form-group">
+                                <label for="HoTen">Nhân viên tạo đơn <span class="text-danger">*</span></label>
+                                <select id="IdNhanVien" name="IdNhanVien" class="select2bs4 form-control" style="width: 100%;" required>
+                                    <option value="">-Lựa chọn nhân viên-</option>
+                                    @*@foreach (var item in listNhanVien)
+                {
+                    <option value="@item.Id">@item.HoTen - @item.Email</option>
+                }*@
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Nhà cung cấp <span class="text-danger">*</span></label>
+                                <select id="IdNhaCungCap" name="IdNhaCungCap" class="select2bs4 form-control" style="width: 100%;" onchange="getMatHangOfNhaCungCap()" disabled required>
+                                    <option value="">-Lựa chọn nhà cung cấp-</option>
+                                    @*@foreach (var item in listNhaCungCap)
+                {
+                    <option value="@item.Id">@item.TenNCC - @item.Email</option>
+                }*@
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Đơn vị tiền tệ <span class="text-danger">*</span></label>
+                                <input type="text" id="DonViTienTe" name="DonViTienTe" class="form-control" placeholder="VD: VNĐ" value="@Model.DonViTienTe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Phí vận chuyển <span class="text-danger">*</span></label>
+                                <input type="number" id="PhiVanChuyen" name="PhiVanChuyen" class="form-control" min="0" value="@Model.PhiVanChuyen" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Phí khác <span class="text-danger">*</span></label>
+                                <input type="number" id="PhiKhac" name="PhiKhac" class="form-control" min="0" value="@Model.PhiKhac" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Thuế GTGT(%) <span class="text-danger">*</span></label>
+                                <input type="number" id="TienThueGTGT" name="TienThueGTGT" class="form-control" min="0" max="100" value="@Model.TienThueGTGT" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Ngày giao hàng dự kiến</label>
+                                <input type="text" id="NgayNhapDuKien" name="NgayNhapDuKien" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask value="@Model.NgayNhapDuKien">
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Hình thức thanh toán <span class="text-danger">*</span></label>
+                                <input type="text" id="HinhThucThanhToan" name="HinhThucThanhToan" class="form-control" placeholder="VD: Tiền mặt" value="@Model.HinhThucThanhToan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="HoTen">Tổng tiền</label>
+                                <input type="text" id="TongTien" name="TongTien" class="form-control" placeholder="VD: Tiền mặt" value="@Model.TongTien" required>
+                            </div>
+                            <button type="submit" id="btnsmit" class="d-none"></button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Chi tiết đơn hàng</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md text-right">
+                                <button type="button" class="btn btn-info" onclick='onCreate()'><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mặt hàng</button>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-hover table-striped table-condensed" cellspacing="0" rules="all" border="1" id="tblCTDH">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Tên mặt hàng</th>
+                                    <th class="text-center">Đơn vị tính</th>
+                                    <th class="text-center">Đơn giá</th>
+                                    <th class="text-center">Số lượng</th>
+                                    <th class="text-center">Thành tiền</th>
+                                    <th class="text-center">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (var item in listChiTietDonHang)
+                                {
+                                    <tr>
+                                        <td align="left">@item.NhaCungCapMatHang.MatHang.TenHang</td>
+                                        <td align="center">@item.DonVi</td>
+                                        <td align="center">@item.DonGia</td>
+                                        <td align="center">@item.SoLuong</td>
+                                        <td align="center">@item.ThanhTien</td>
+                                        <td style="display:none;">@item.IdNhaCungCapMatHang</td>
+                                        <td align="center">
+                                            <button class="btn btn-warning" onclick="onEdit(this, @item.Id)"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</button>
+                                            <button class="btn btn-danger" onclick="onDelete(this, @item.Id)"><i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</button>
+                                        </td>
+                                    </tr>
+                                }*@
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <button class="btn btn-secondary" onclick="$('#formEditDonHang').trigger('reset');">Hủy</button>
+                <button type="button" onclick="$('#btnsmit').click()" class="btn btn-success float-right">Sửa đơn hàng</button>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- modal thêm sửa chi tiết đơn hàng -->
+<div id="CTDH-modal" class="modal effect-scale fade" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="CTDH-modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Thêm mặt hàng</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:onSubmitCTDH()" id="formAddCTDH">
+                    <input type="hidden" id="CTDHId" name="Id" value="-1" />
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Mặt hàng <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <select class="form-control select2bs4" id="IdNhaCungCapMatHang" name="IdNhaCungCapMatHang" style="width:100%" required>
+                                <option value="">- Chọn mặt hàng -</option>
+                                @*@foreach (var item in listNhaCungCapMatHang)
+                                {
+                                    <option value="@item.Id">@item.MatHang.TenHang</option>
+                                }*@
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Đơn vị tính <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <input type="text" class="form-control" name="DonVi" id="DonVi" value="" maxlength="50" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Đơn giá <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <input type="number" class="form-control" name="DonGia" id="DonGia" min="0" value="" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mt-1">
+                            <label class="control-label">Số lượng <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="form-group col-md">
+                            <input type="number" class="form-control" name="SoLuong" id="SoLuong" min="1" value="" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="d-none" id="sMit" />
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary text-uppercase">đóng</button>
+                <button type="button" onclick="$('#sMit').click()" id="btnThemSuaCtdh" class="btn btn-success text-uppercase">thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Summernote -->
+    <script src="~/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- InputMask -->
+    <script src="~/Content/plugins/moment/moment.min.js"></script>
+    <script src="~/Content/plugins/inputmask/jquery.inputmask.min.js"></script>
+
+    <script>
+        var selectedRow = null
+        $("#IdNhaCungCap").val(@Model.IdNhaCungCap)
+        $("#IdNhanVien").val(@Model.IdNhanVien)
+        //Money Euro
+        $('[data-mask]').inputmask()
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
+        function resetForm() {
+            $("#IdNhaCungCapMatHang").val("").change()
+            $("#DonVi").val("")
+            $("#DonGia").val("")
+            $("#SoLuong").val("")
+            $("#CTDHId").val("-1")
+            selectedRow = null;
+        }
+
+        function onCreate() {
+            if ($("#IdNhaCungCap").val()) {
+                $("#CTDH-modal-content div h6").text("Thêm mặt hàng vào đơn hàng");
+                $("#btnThemSuaCtdh").text("Thêm");
+                resetForm()
+                openModalCommom("CTDH-modal")
+            }
+            else {
+                toastCanhbao("Vui lòng chọn nhà cung cấp để thêm mặt hàng!")
+            }
+        }
+
+        function onSubmitCTDH() {
+            var formData = readFormData();
+            if (selectedRow == null)
+                insertNewRecord(formData);
+            else
+                updateRecord(formData);
+        }
+
+        function readFormData() {
+            var formData = {};
+            formData["Id"] = $("#CTDHId").val()
+            formData["IdNhaCungCapMatHang"] = $("#IdNhaCungCapMatHang").val()
+            formData["DonVi"] = $("#DonVi").val()
+            formData["DonGia"] = $("#DonGia").val()
+            formData["SoLuong"] = $("#SoLuong").val()
+            formData["TenMatHang"] = $("#IdNhaCungCapMatHang option:selected").text()
+            formData["ThanhTien"] = $("#SoLuong").val() * $("#DonGia").val()
+            return formData;
+        }
+
+        function insertNewRecord(data) {
+            var table = $("#tblCTDH tbody") //document.getElementById("tblTkb").getElementsByTagName('tbody')[0];
+            var newRow = `<tr>
+                    <td align="left">` + data.TenMatHang + `</td>
+                    <td align="center">` + data.DonVi + `</td>
+                    <td align="center">` + data.DonGia + `</td>
+                    <td align="center">` + data.SoLuong + `</td>
+                    <td align="center">` + data.ThanhTien + `</td>
+                    <td style="display:none;">` + data.IdNhaCungCapMatHang + `</td>
+                    <td align="center">
+                        <button class="btn btn-warning" onclick="onEdit(this, `+ data.Id + `)"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</button>
+                        <button class="btn btn-danger" onclick="onDelete(this, `+ data.Id + `)"><i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</button>
+                    </td>
+                </tr>`
+
+            var formData = new FormData(document.getElementById('formAddCTDH'));
+            formData.append("IdDonHang", $("#DhId").val())
+            formData.append("ThanhTien", data.ThanhTien)
+            $.ajax({
+                url: '/DonHang/ThemChiTietDonHang',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                        table.append(newRow)
+                        resetForm()
+                        $("#CTDH-modal").modal("hide")
+                        //window.location.reload()
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+
+
+        function onEdit(td, id) {
+            $("#CTDH-modal-content div h6").text("Sửa mặt hàng trong đơn hàng")
+            $("#btnThemSuaCtdh").text("Sửa")
+            selectedRow = td.parentElement.parentElement;
+            $("#DonVi").val(selectedRow.cells[1].innerHTML)
+            $("#DonGia").val(selectedRow.cells[2].innerHTML)
+            $("#SoLuong").val(selectedRow.cells[3].innerHTML)
+            $("#IdNhaCungCapMatHang").val(selectedRow.cells[5].innerHTML).change()
+            $("#CTDHId").val(id)
+            openModalCommom("CTDH-modal")
+        }
+
+        function updateRecord(Data) {
+
+            var formData = new FormData(document.getElementById('formAddCTDH'));
+            formData.append("IdDonHang", $("#DhId").val())
+            formData.append("ThanhTien", Data.ThanhTien)
+            $.ajax({
+                url: '/DonHang/SuaChiTietDonHang',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        selectedRow.cells[0].innerHTML = Data.TenMatHang;
+                        selectedRow.cells[1].innerHTML = Data.DonVi;
+                        selectedRow.cells[2].innerHTML = Data.DonGia;
+                        selectedRow.cells[3].innerHTML = Data.SoLuong;
+                        selectedRow.cells[4].innerHTML = Data.ThanhTien;
+                        selectedRow.cells[5].innerHTML = Data.IdNhaCungCapMatHang;
+                        toastThanhCong(data.msg)
+                        $("#CTDH-modal").modal("hide")
+                        resetForm()
+                        //window.location.reload()
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+
+        function onDelete(td, id) {
+            if (confirm('Bạn có muốn xóa mặt hàng này không ?')) {
+                $.ajax({
+                    url: '/DonHang/DeleteCTDH',
+                    dataType: 'json',
+                    data: { id: id },
+                    type: 'POST',
+                    success: function (data) {
+                        //var data = JSON.parse(content)
+                        if (data.status == 200) {
+                            toastThanhCong(data.msg)
+                            row = td.parentElement.parentElement;
+                            document.getElementById("tblCTDH").deleteRow(row.rowIndex);
+                            //window.location.reload()
+                        }
+                        else {
+                            toastThatBai(data.msg)
+                        }
+
+                    }
+                });
+            }
+        }
+
+        function EditDonHang() {
+            var formData = new FormData(document.getElementById('formEditDonHang'));
+
+            $.ajax({
+                url: '/DonHang/SuaDonHang',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+
+                }
+            });
+        }
+
+        function getMatHangOfNhaCungCap() {
+            var idncc = $('#IdNhaCungCap').val()
+            if (idncc) {
+                $.ajax({
+                    type: "GET",
+                    data: { idncc: idncc },
+                    url: "../DonHang/GetMatHangOfNhaCungCap",
+                    success: function (data, status, xhr) {
+                        if (data.status == 200) {
+                            var list = `<option value="">- Chọn mặt hàng -</option>`
+                            $.each(data.data, function (i, v) {
+                                var temp = `<option value="` + v.Id + `">` + v.TenHang + `</option>`
+                                list += temp;
+                            })
+                            $('#IdNhaCungCapMatHang').html(list)
+                        }
+                        else if (data.status == 400) {
+                            toastCanhbao(data.msg)
+                        }
+                        else {
+                            toastThatBai(data.msg)
+                        }
+                    },
+                    error: function () {
+                        toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                    }
+                });
+            }
+            else {
+                $('#IdNhaCungCapMatHang').html(`<option value="">- Chọn mặt hàng -</option>`)
+            }
+
+        }
+    </script>
+}

@@ -1,0 +1,184 @@
+﻿@model LibData.KhuyenMai
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">@ViewBag.Title</h4>
+            <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @ViewBag.Title
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <form class="form-horizontal" id="formAddEdit" action="javascript:@ViewBag.functionSubmit">
+                    @Html.Hidden("Id", Model.Id)
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Thông tin khuyến mãi</h4>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label col-form-label">Mã khuyến mãi</label>
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       class="form-control"
+                                       name="TenKhuyenMai" value="@Model.Code" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label col-form-label">Nội dung khuyến mãi</label>
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       class="form-control"
+                                       name="Email" value="@Model.NoiDung" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label col-form-label">Khuyến mại(%)</label>
+                            <div class="col-sm-10">
+                                <input type="number"
+                                       class="form-control"
+                                       name="Password" value="@Model.KMPhanTram" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label col-form-label">Khuyến mại(VNĐ)</label>
+                            <div class="col-sm-10">
+                                <input type="number"
+                                       class="form-control"
+                                       name="DienThoai" value="@Model.KMTienMat" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label col-form-label">Trạng thái</label>
+                            <div class="col-sm-10">
+
+                                <select class="select2 form-select shadow-none"
+                                        style="width: 100%; height: 36px" name="TinhTrang" id="TinhTrang" required>
+                                    <option value="@((int)LibData.Config.CommonConfig.CommonStatus.Normal)">Hoạt động</option>
+                                    <option value="@((int)LibData.Config.CommonConfig.CommonStatus.Disabled)">Ẩn</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body text-end">
+                            <button type="submit" class="btn-success text-white">
+                                Lưu
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+
+@section Css{
+    <link rel="stylesheet"
+          type="text/css"
+          href="~/Content/assets/libs/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="~/Content/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
+}
+
+@section Scripts{
+    <script src="~/Content/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Content/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="~/Content/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(".select2").select2();
+        // nếu model là sửa thì select đúng tình trạng
+        @if(Model.Id != 0)
+        {
+            <text>$('#TinhTrang').val(@Model.TinhTrang).change();</text>
+        }
+
+        function addKhuyenMai() {
+            var formData = new FormData(document.getElementById('formAddEdit'));
+            $.ajax({
+                url: '/Admin/KhuyenMai/ThemKhuyenMai',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastr.success("Thông báo", data.msg);
+                    }
+                    else {
+                        toastr.error("Thông báo", data.msg);
+                    }
+
+                }
+            });
+        }
+
+        function editKhuyenMai() {
+            var formData = new FormData(document.getElementById('formAddEdit'));
+            $.ajax({
+                url: '/Admin/KhuyenMai/SuaKhuyenMai',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data) {
+                    //var data = JSON.parse(content)
+                    if (data.status == 200) {
+                        toastr.success("Thông báo", data.msg);
+                    }
+                    else {
+                        toastr.error("Thông báo", data.msg);
+                    }
+
+                }
+            });
+        }
+
+    </script>
+}

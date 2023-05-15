@@ -1,0 +1,72 @@
+﻿@model List<LibData.Album>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count > 0)
+{
+<section id="testimonials" class="testimonials section-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Trải nghiệm</h2>
+            <p>Những thực khách hài lòng với dịch vụ của chúng tôi</p>
+        </div>
+
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model)
+                {
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                <br />
+                                @item.GhiChu
+                                <br />
+                                <i class="bx bxs-quote-alt-right quote-icon-right" style="display:flex; justify-content:flex-end"></i>
+                            </p>
+                            <img src="@item.HinhAnh" class="testimonial-img" alt="">
+                            <h3>@item.TenAnh</h3>
+                            <h4></h4>
+                        </div>
+                    </div><!-- End testimonial item -->
+                }
+                    <!--<div class="swiper-slide">
+            <div class="testimonial-item">
+                <p>
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    Đồ nấu rất ngon mà giá lại phải chăng
+                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="~/Content/pages/login/assets/img/testimonials/ava4.png" class="testimonial-img" alt="">
+                <h3>Chị Nguyễn Ngọc Lan</h3>
+                <h4></h4>
+            </div>
+        </div>-->
+                    <!-- End testimonial item -->
+
+                    <!--<div class="swiper-slide">
+            <div class="testimonial-item">
+                <p>
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    Người phục vụ rất lịch sự, khá hài lòng
+                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="~/Content/pages/login/assets/img/testimonials/ava2.png" class="testimonial-img" alt="">
+                <h3>Chị Nguyễn Văn Thoa</h3>
+                <h4></h4>
+            </div>
+        </div>-->
+                    <!-- End testimonial item -->
+
+
+                </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    </div>
+</section>
+
+
+}

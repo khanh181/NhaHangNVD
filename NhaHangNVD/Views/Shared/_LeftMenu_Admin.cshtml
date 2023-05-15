@@ -1,0 +1,739 @@
+﻿
+@{
+    Layout = null;
+}
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link">
+        <img src="~/Content/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Quản trị</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar" style="padding-bottom: 100px">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 text-center text-white">
+
+            <div class="info">
+                @DateTime.Today.ToString("dd/MM/yyyy")
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                @if ((Session["UserRole"] as List<string>).Contains("ADMIN"))
+                {
+                    <!-- Nhan Vien -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý nhân viên">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Quản lý nhân viên
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh mục nhân viên">
+                                <a href="/NhanVien/DanhMucNhanVien" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh mục nhân viên</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm nhân viên">
+                                <a href="/NhanVien/ThemNhanVien" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm nhân viên</p>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <!-- Nha cung cap -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý nhà cung cấp">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Quản lý nhà cung cấp
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh mục nhà cung cấp">
+                                <a href="/NhaCungCap/DanhMucNhaCungCap" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh mục nhà cung cấp</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm nhà cung cấp">
+                                <a href="/NhaCungCap/ThemNhaCungCap" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm nhà cung cấp</p>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+                    <!-- BanAn -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý bàn ăn">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-utensils" ></i>
+                            <p>
+                                Quản lý bàn ăn
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục kho">
+                                <a href="/BanAn/DanhMucBanAn" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục bàn ăn</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm kho">
+                                <a href="/BanAn/ThemBanAn" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm bàn ăn</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Chi nhanh -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý chi nhánh">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-house-user"></i>
+                            <p>
+                                Quản lý chi nhánh
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục chi nhánh">
+                                <a href="/ChiNhanh/DanhMucChiNhanh" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục chi nhánh</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm chi nhánh">
+                                <a href="/ChiNhanh/ThemChiNhanh" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm chi nhánh</p>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <!-- Role -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý quyền">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-users-line"></i>
+                            <p>
+                                Quản lý quyền
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục quyền">
+                                <a href="/Role/DanhMucRole" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục quyền</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm quyền">
+                                <a href="/Role/ThemRole" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm quyền</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
+
+                    <!-- VatTu -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý vật tư">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-parachute-box"></i>
+                            <p>
+                                Quản lý vật tư
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục vật tư">
+                                <a href="/VatTu/DanhMucVatTu" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục vật tư</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm vật tư">
+                                <a href="/VatTu/ThemVatTu" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm vật tư</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <!-- KhachHang -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý khách hàng">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-regular fa-user"></i>
+                            <p>
+                                Quản lý khách hàng
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục khách hàng">
+                                <a href="/KhachHang/DanhMucKhachHang" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục khách hàng</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm khách hàng">
+                                <a href="/KhachHang/ThemKhachHang" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm khách hàng</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <!-- ThucDon -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý thực đơn">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-file-pen"></i>
+                            <p>
+                                Quản lý thực đơn
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục thực đơn">
+                                <a href="/ThucDon/DanhMucThucDon" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục thực đơn</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm thực đơn">
+                                <a href="/ThucDon/ThemThucDon" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm thực đơn</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <!-- KhuyenMai -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý khuyến mãi">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-money-check"></i>
+                            <p>
+                                Quản lý khuyến mãi
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục khuyến mãi">
+                                <a href="/KhuyenMai/DanhMucKhuyenMai" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục khuyến mãi</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm khuyến mãi">
+                                <a href="/KhuyenMai/ThemKhuyenMai" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm khuyến mãi</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <!-- MonAn -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý món ăn">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-utensils"></i>
+                            <p>
+                                Quản lý món ăn
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục món ăn">
+                                <a href="/MonAn/DanhMucMonAn" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục món ăn</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm món ăn">
+                                <a href="/MonAn/ThemMonAn" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm món ăn</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <!-- SuKien -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý sự kiện">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-regular fa-calendar-days"></i>
+                            <p>
+                                Quản lý sự kiện
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục sự kiện">
+                                <a href="/SuKien/DanhMucSuKien" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục sự kiện</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm sự kiện">
+                                <a href="/SuKien/ThemSuKien" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm sự kiện</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <!-- Album -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý ảnh">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-images"></i>
+                            <p>
+                                Quản lý ảnh
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục ảnh">
+                                <a href="/Album/DanhMucAlbum" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục ảnh</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm ảnh">
+                                <a href="/Album/ThemAlbum" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thêm ảnh</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <!-- Don Hang -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý đơn hàng">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-cart-arrow-down"></i>
+                            <p>
+                                Quản lý đặt chỗ
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục đơn hàng">
+                                <a href="/DatCho/DanhSachDatCho" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh sách đặt chỗ</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý đơn hàng">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-chart-line"></i>
+                            <p>
+                                Quản lý thống kê
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thống kê">
+                                <a href="/ThongKe/Index" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Thống kê hóa đơn</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Phat Hang -->
+                    @*<li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý đơn phát hàng">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-newspaper"></i>
+                    <p>
+                        Quản lý đơn phát hàng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh mục phát hàng">
+                        <a href="/PhatHang/DanhMucPhatHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh mục đơn phát hàng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm phát hàng">
+                        <a href="/PhatHang/ThemPhatHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm đơn phát hàng</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>*@
+                    <!-- DK Giao Hang -->
+                    @*<li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý ĐK giao hàng">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-newspaper"></i>
+                    <p>
+                        Quản lý ĐK giao hàng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh mục ĐK giao hàng">
+                        <a href="/DKGiaoHang/DanhMucDKGiaoHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh mục ĐK giao hàng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm ĐK giao hàng">
+                        <a href="/DKGiaoHang/ThemDKGiaoHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm ĐK giao hàng</p>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </li>*@
+                    <!-- loai Mat Hang -->
+                    @*<li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý loại mặt hàng">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-list"></i>
+                    <p>
+                        Quản lý loại mặt hàng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+
+                <ul class="nav nav-treeview">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục loại mặt hàng">
+                        <a href="/LoaiHang/DanhMucLoaiHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh Mục loại mặt hàng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm loại mặt hàng">
+                        <a href="/LoaiHang/ThemLoaiHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm loại mặt hàng</p>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </li>*@
+                    <!-- Mat Hang -->
+                    @*<li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý mặt hàng">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    <p>
+                        Quản lý mặt hàng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh sách mặt hàng">
+                        <a href="/MatHang/DanhMucMatHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách mặt hàng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm mặt hàng">
+                        <a href="/MatHang/ThemMatHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm mặt hàng</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>*@
+                    <!-- Kho -->
+                    @*<li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý kho">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-home"></i>
+                    <p>
+                        Quản lý kho
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh Mục kho">
+                        <a href="/Kho/DanhMucKho" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh Mục kho</p>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm kho">
+                        <a href="/Kho/ThemKho" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm kho</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>*@
+
+                }
+                <!-- Role DATHANG -->
+                <!-- Role DOICHIEU -->
+                <!-- Phieu Giao Hang -->
+                <!--<li class="nav-item" data-toggle="tooltip" data-placement="top" title=" Quản lý phiếu giao hàng">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-newspaper"></i>
+            <p>
+                Quản lý phiếu giao hàng
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Danh mục phiếu giao hàng">
+                <a href="/PhieuGiaoHang/DanhMucPhieuGiaoHang" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh mục phiếu giao hàng</p>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Thêm phiếu giao hàng">
+                <a href="/PhieuGiaoHang/ThemPhieuGiaoHang" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Thêm phiếu giao hàng</p>
+                </a>
+            </li>
+
+
+        </ul>
+    </li>-->
+                <!-- Phòng tài vụ -->
+                <!--<li class="nav-item" data-toggle="tooltip" data-placement="top" title="Quản lý tài vụ">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-money-bill"></i>
+            <p>
+                Quản lý tài vụ
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Công việc tài vụ">
+                <a href="/PhongTaiVu/CongViecTaiVu" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Công việc tài vụ</p>
+                </a>
+            </li>
+        </ul>
+    </li>-->
+                <!-- Role PHATHANG -->
+                <!-- Doi chieu -->
+                @*<li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-list-ol"></i>
+                <p>
+                    Quản lý đối chiếu
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="/DoiChieu/DanhMucDoiChieu" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Danh Mục đối chiếu</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/DoiChieu/ThemDoiChieu" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Thêm đối chiếu</p>
+                    </a>
+                </li>
+
+
+            </ul>
+        </li>*@
+                @*@if ((Session["UserRole"] as List<string>).Contains("ADMIN"))
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>
+                        Quản lý người dùng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/TaiKhoan/AddUser" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm người dùng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/TaiKhoan/User" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách người dùng</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-newspaper"></i>
+                    <p>
+                        Quản lý tin tức
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/TinTuc/QuanLyDuyetTin" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách duyệt tin</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-list-ol"></i>
+                    <p>
+                        Quản lý danh mục
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/DanhMuc/AddDanhMuc" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm danh mục</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/DanhMuc/QuanLyDanhMuc" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách danh mục</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-user-tag"></i>
+                    <p>
+                        Quản lý quyền
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/Role/AddRole" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm quyền</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Role/QuanLyRole" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách quyền</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-phone"></i>
+                    <p>
+                        Quản lý liên hệ đặt hàng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/LienHeDathang/QuanLyLienHeDatHang" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách liên hệ đặt hàng</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-newspaper"></i>
+                    <p>
+                        Quản lý tin tức
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/TinTuc/AddTinTuc" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm tin tức</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/TinTuc/QuanLyTinTuc" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách tin tức</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }*@
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+<script>
+
+    function Logout() {
+        if (confirm("Bạn muốn đăng xuất?")) {
+            window.location.replace("/Account/Logout");
+        }
+    }
+</script>

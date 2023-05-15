@@ -1,0 +1,364 @@
+﻿@model List<LibData.BanAn>
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+@section Css{
+    <!-- Ekko Lightbox -->
+    <link rel="stylesheet" href="~/Content/plugins/ekko-lightbox/ekko-lightbox.css">
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Bảng điều khiển</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Main row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4 class="card-title">Danh sách & trạng thái bàn</h4>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div class="btn-group w-100 mb-2 btn-group-data-filter">
+                                    <a class="btn btn-info active" href="javascript:void(0)" data-filter="all"> Tất cả </a>
+                                    <a class="btn btn-info" href="javascript:void(0)" data-filter="1"> Bàn trống (Trắng) </a>
+                                    <a class="btn btn-info" href="javascript:void(0)" data-filter="2"> Bàn bận (Đỏ) </a>
+                                    <a class="btn btn-info" href="javascript:void(0)" data-filter="3"> Bàn được đặt (Vàng) </a>
+                                    <a class="btn btn-info" href="javascript:void(0)" data-filter="4"> Bàn hỏng (Đen)</a>
+                                </div>
+                                <div class="mb-2">
+                                    @*<a class="btn btn-secondary" href="javascript:void(0)" data-shuffle> Ngẫu nhiên </a>*@
+                                    <div class="col-12 text-right">
+                                        <select class="custom-select" style="width: auto;" data-sortOrder>
+                                            <option value="index"> Sắp xếp theo tên bàn </option>
+                                            @*<option value="sortData"> Sắp xếp theo trạng thái </option>*@
+                                        </select>
+                                        <div class="btn-group">
+                                            <a class="btn btn-default" href="javascript:void(0)" data-sortAsc> Từ bé đến lớn </a>
+                                            <a class="btn btn-default" href="javascript:void(0)" data-sortDesc> Từ lớn đến bé</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="filter-container p-0 row" id="listBanTrangThai">
+                                    @foreach (var item in Model)
+                                    {
+                                        var link = string.Format("https://via.placeholder.com/300/{0}?text={1}", LibData.Config.CommonConfig.BanStatusToDictionary[item.TinhTrang], item.TenBan);
+                                        <div class="filtr-item col-sm-2 " id="ban-tinhtrang-@item.Id" data-category="@item.TinhTrang">
+                                            <a onclick="openModalBan(@item.Id, @item.TinhTrang)" id="ban-function-@item.Id">
+                                                <img src="@link" class="img-fluid mb-2 border" id="ban-mausac-@item.Id" />
+                                            </a>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<div class="modal fade" id="modal-banban-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modal-content-banban">
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<div class="modal fade" id="modal-banduocdat-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modal-content-banduocdat">
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- /.modal -->
+@section Scripts{
+    <!-- Ekko Lightbox -->
+    <script src="~/Content/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+    <!-- Filterizr-->
+    <script src="~/Content/plugins/filterizr/jquery.filterizr.min.js"></script>
+
+    <script>
+        $(function () {
+            banTrangThaiConfig();
+
+            timeout()
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        })
+
+        function timeout() {
+            setTimeout(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "../Home/ListBanTrangThai",
+                    dataType: "json",
+                    success: function (data, status, xhr) {
+                        if (data.status == 200) {
+                            $.each(data.data, function (i, v) {
+                                $('#ban-tinhtrang-' + v.Id).attr("data-category", v.TinhTrang);
+                                $('#ban-mausac-' + v.Id).attr("src", v.MauSac);
+                                $('#ban-function-' + v.Id).attr("onclick", "openModalBan(" + v.Id + "," + v.TinhTrang + ")");
+                            });
+                            $('.duoc-chon').click()
+                            timeout();
+                        }
+                        else {
+                            console.log(data.msg)
+                        }
+                    },
+                    error: function () {
+                        toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                    }
+                });
+            }, 2000);
+        }
+
+        function banTrangThaiConfig() {
+            $('.filter-container').filterizr({ gutterPixels: 3 });
+            $('.btn[data-filter]').on('click', function () {
+                $('.btn[data-filter]').removeClass('active');
+                $('.btn[data-filter]').removeClass('duoc-chon');
+                $(this).addClass('active');
+                $(this).addClass('duoc-chon');
+            });
+        }
+
+        function openModalBan(idBan, trangThai) {
+            if (trangThai == 2) {
+                $("#modal-content-banban").load("/HoaDon/ModalBanBan?idBan=" + idBan, function (response, status, xhr) {
+                    $('#modal-banban-lg').modal("show")
+                    timeout();
+                });
+            }
+            else if (trangThai == 3) {
+                $("#modal-content-banduocdat").load("/HoaDon/ModalBanDuocDat?idBan=" + idBan, function (response, status, xhr) {
+                    $('#modal-banduocdat-lg').modal("show")
+                    timeout();
+                });
+            }
+        }
+
+        function chuyenBan(ban) {
+            var formData = new FormData(document.getElementById('formChuyenBan'));
+            $.ajax({
+                url: "../HoaDon/ChuyenBan",
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                        $('#modal-' + ban + '-lg').modal("hide")
+                        timeout();
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+        function huyHoaDon(ban) {
+            if (confirm("Bạn muốn hủy?")) {
+                var formData = new FormData(document.getElementById('formEditThongTinDatBan'));
+                $.ajax({
+                    url: "../HoaDon/HuyHoaDon",
+                    dataType: 'json',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    type: 'POST',
+                    success: function (data, status, xhr) {
+                        if (data.status == 200) {
+                            toastThanhCong(data.msg)
+                            $('#modal-' + ban + '-lg').modal("hide")
+                            timeout();
+                        }
+                        else {
+                            toastThatBai(data.msg)
+                        }
+                    },
+                    error: function () {
+                        toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                    }
+                });
+            }
+        }
+
+        function editHoaDon(ban) {
+            var formData = new FormData(document.getElementById('formEditThongTinDatBan'));
+            $.ajax({
+                url: "../HoaDon/EditHoaDon",
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        toastThanhCong(data.msg)
+                        $('#modal-' + ban + '-lg').modal("hide")
+                        timeout();
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+        function addNDHoaDon() {
+            var formData = new FormData(document.getElementById('formAddNDHoaDon'));
+            $.ajax({
+                url: "../HoaDon/AddNDHoaDon",
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                traditional: true,
+                type: 'POST',
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        var html = `<tr>
+                                    <td>`+ data.data.TenMon +`</td>
+                                    <td>`+ data.data.Giatien +`</td>
+                                    <td><input type="number" class="form-control" value="` + data.data.SoLuong + `" onchange="editNDHoaDon(` + data.data.Id +`, this)"></td>
+                                    <td id="model_ThanhTien_`+ data.data.Id +`">`+ data.data.ThanhTien +`</td>
+                                    <td class="text-center">
+                                        <a style="cursor: pointer;" onclick="xoaNdHoaDon(`+ data.data.Id +`, this)"><i class="fa fa-trash"></i> Xóa</a>
+                                    </td>
+                                </tr>`
+                        $('#listMonAnDuocGoi').append(html)
+                        $('#tiem-tam-tinh').html(`<b>Tiền tạm tính: ` + data.data.TongTien + `</b>`)
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+        function editNDHoaDon(id, e) {
+            $.ajax({
+                type: "POST",
+                url: "../HoaDon/EditNDHoaDon",
+                data: { Id: id, SoLuong: $(e).val() },
+                dataType: "json",
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        $('#model_ThanhTien_' + id + '').text(data.data.ThanhTien)
+                        $('#tiem-tam-tinh').html(`<b>Tiền tạm tính: ` + data.data.TongTien + `</b>`)
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+        function xoaNdHoaDon(id, e) {
+            $.ajax({
+                type: "POST",
+                url: "../HoaDon/XoaNDHoaDon",
+                data: { id: id },
+                dataType: "json",
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        $(e).closest("tr").remove();
+                        $('#tiem-tam-tinh').html(`<b>Tiền tạm tính: ` + data.data.TongTien + `</b>`)
+                        toastThanhCong(data.msg)
+                    }
+                    else {
+                        toastThatBai(data.msg)
+                    }
+                },
+                error: function () {
+                    toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                }
+            });
+        }
+
+        function chuyenHuongThanhToan(link) {
+            let text = prompt("Vui lòng nhập mã khuyến mại nếu có");
+            if (text == null || text == "") {
+                window.open(link, '_blank').focus();
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "../KhuyenMai/CheckCodeKMValid",
+                    data: { code: text },
+                    dataType: "json",
+                    success: function (data, status, xhr) {
+                        if (data.status == 200) {
+                            $('#modal-banban-lg').modal('hide')
+                            window.open(link + "&codeKM=" + text, '_blank').focus();
+                        }
+                        else {
+                            toastThatBai(data.msg)
+                        }
+                    },
+                    error: function () {
+                        toastThatBai("Đã có lỗi xảy ra vui lòng thử lại hoặc liên hệ với hỗ trợ viên để được hỗ trợ!");
+                    }
+                });
+
+            }
+        }
+    </script>
+}
